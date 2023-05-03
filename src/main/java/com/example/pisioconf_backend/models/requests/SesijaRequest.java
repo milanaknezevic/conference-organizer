@@ -7,7 +7,8 @@ import java.util.List;
 
 @Data
 public class SesijaRequest {
-    private List<DogadjajRequest> dogadjaji;
     private Date startTime;
     private Date endTime;
+    private Integer konferencijaId;
+    private List<DogadjajRequest> dogadjaji;
 }

@@ -13,9 +13,7 @@ import com.example.pisioconf_backend.services.KonferencijaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,7 +88,6 @@ public class KonferencijaImplService implements KonferencijaService {
         konferencijaRepository.deleteById(id);
 
     }
-
 
 
     @Override

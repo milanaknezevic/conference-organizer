@@ -65,4 +65,26 @@ public class DogadjajImplService implements DogadjajService {
         dogadjajEntity = dogadjajRepository.saveAndFlush(dogadjajEntity);
         return findById(dogadjajEntity.getId());
     }
+
+    @Override
+    public Dogadjaj update(Integer id, DogadjajRequest dogadjajRequest) throws NotFoundException {
+        DogadjajEntity dogadjajEntity = dogadjajRepository.findById(id).get(); // modelMapper.map(konferencijaRequest, KonferencijaEntity.class);
+        if (dogadjajRequest.getStartTime() != null) {
+            dogadjajEntity.setStartTime(dogadjajRequest.getStartTime());
+        }
+        if (dogadjajRequest.getEndTime() != null) {
+            dogadjajEntity.setEndTime(dogadjajRequest.getEndTime());
+        }
+        if (dogadjajRequest.getNaziv() != null) {
+            dogadjajEntity.setNaziv(dogadjajRequest.getNaziv());
+        }
+        if (dogadjajRequest.getUrl() != null) {
+            dogadjajEntity.setUrl(dogadjajRequest.getUrl());
+        }
+
+        dogadjajEntity.setId(id);
+
+        dogadjajEntity = dogadjajRepository.saveAndFlush(dogadjajEntity);
+        return findById(dogadjajEntity.getId());
+    }
 }

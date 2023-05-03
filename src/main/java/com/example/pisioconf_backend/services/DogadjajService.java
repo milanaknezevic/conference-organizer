@@ -16,4 +16,5 @@ public interface DogadjajService {
     void delete(Integer id);
 
     Dogadjaj insert(DogadjajRequest konferencijaRequest) throws NotFoundException;
+    Dogadjaj update(Integer id, DogadjajRequest dogadjajRequest) throws NotFoundException;
 }
