@@ -1,15 +1,13 @@
 package com.example.pisioconf_backend.services.impl;
 
+import com.example.pisioconf_backend.controllers.repositories.DogadjajRepository;
+import com.example.pisioconf_backend.controllers.repositories.ResursRepository;
+import com.example.pisioconf_backend.controllers.repositories.RezervacijaRepository;
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Rezervacija;
-import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
-import com.example.pisioconf_backend.models.entities.ResursEntity;
-import com.example.pisioconf_backend.models.entities.RezervacijaEntity;
-import com.example.pisioconf_backend.models.entities.RezervacijaEntityPK;
+import com.example.pisioconf_backend.models.entities.*;
 import com.example.pisioconf_backend.models.requests.RezervacijaRequest;
-import com.example.pisioconf_backend.controllers.repositories.ResursRepository;
-import com.example.pisioconf_backend.controllers.repositories.RezervacijaRepository;
 import com.example.pisioconf_backend.services.RezervacijaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -22,11 +20,14 @@ public class RezervacijaImplService implements RezervacijaService {
     private final ModelMapper modelMapper;
     private final RezervacijaRepository rezervacijaRepository;
     private final ResursRepository resursRepository;
+    private final DogadjajRepository dogadjajRepository;
 
-    public RezervacijaImplService(ModelMapper modelMapper, RezervacijaRepository rezervacijaRepository, ResursRepository resursRepository) {
+    public RezervacijaImplService(ModelMapper modelMapper, RezervacijaRepository rezervacijaRepository, ResursRepository resursRepository,
+                                  DogadjajRepository dogadjajRepository) {
         this.modelMapper = modelMapper;
         this.rezervacijaRepository = rezervacijaRepository;
         this.resursRepository = resursRepository;
+        this.dogadjajRepository = dogadjajRepository;
     }
 
     @Override
@@ -36,10 +37,22 @@ public class RezervacijaImplService implements RezervacijaService {
         rezervacijaEntityPK.setResursId(rezervacijaRequest.getResursId());
         RezervacijaEntity rezervacijaEntity = modelMapper.map(rezervacijaRequest, RezervacijaEntity.class);
         rezervacijaEntity.setId(rezervacijaEntityPK);
+
+        ResursEntity resurs = resursRepository.findById(rezervacijaRequest.getResursId()).orElse(null);
+        DogadjajEntity dogadjaj = dogadjajRepository.findById(rezervacijaRequest.getDogadjajId()).orElse(null);
+
+        if (resurs != null && dogadjaj != null) {
+            rezervacijaEntity.setResursByResursId(resurs);
+            rezervacijaEntity.setDogadjajByDogadjajId(dogadjaj);
+        }
+        if(rezervacijaRequest.getKolicina()>resurs.getKolicina())
+        {
+            throw new NotFoundException();//nije not found vec trebam napraviti novi exc
+        }
+
+
         rezervacijaEntity = rezervacijaRepository.saveAndFlush(rezervacijaEntity);
-        ResursEntity resursEntity = resursRepository.findById(rezervacijaRequest.getResursId()).get();
-        resursEntity.setKolicina(resursEntity.getKolicina()-rezervacijaRequest.getKolicina());
-        resursEntity= resursRepository.saveAndFlush(resursEntity);
+
         return null;
     }
 
@@ -49,22 +62,26 @@ public class RezervacijaImplService implements RezervacijaService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(RezervacijaEntityPK id) {
         rezervacijaRepository.deleteById(id);
     }
 
     @Override
-    public Rezervacija update(Integer id, RezervacijaRequest rezervacijaRequest) {
-        RezervacijaEntity rezervacijaEntity = rezervacijaRepository.findById(id).get(); // modelMapper.map(konferencijaRequest, KonferencijaEntity.class);
+    public Rezervacija findById(RezervacijaEntityPK id) {
+        return modelMapper.map(rezervacijaRepository.findById(id).orElseThrow(NotFoundException::new), Rezervacija.class);
+    }
+
+    @Override
+    public Rezervacija update(RezervacijaEntityPK id, RezervacijaRequest rezervacijaRequest) {
+        RezervacijaEntity rezervacijaEntity = rezervacijaRepository.findById(id).get();
         if (rezervacijaRequest.getKolicina() != null) {
             rezervacijaEntity.setKolicina(rezervacijaRequest.getKolicina());
         }
 
-
-      //  rezervacijaEntity.setId(id);
-
+        rezervacijaEntity.setId(id);
         rezervacijaEntity = rezervacijaRepository.saveAndFlush(rezervacijaEntity);
-       // return findById(konferencijaEntity.getId());
-        return null;
+        return null; // findById(ocjenaEntity.getId());
     }
+
+
 }

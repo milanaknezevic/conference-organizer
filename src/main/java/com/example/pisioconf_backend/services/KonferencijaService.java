@@ -2,6 +2,7 @@ package com.example.pisioconf_backend.services;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Konferencija;
+import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
 
@@ -21,5 +22,6 @@ public interface KonferencijaService //extends CrudService<Integer> {
     Konferencija update(Integer id, KonferencijaRequest konferencijaRequest) throws NotFoundException;
 
     void delete(Integer id);
+    List<Ocjena> getAllOcjeneByKorisnikId(Integer id);
 
 }

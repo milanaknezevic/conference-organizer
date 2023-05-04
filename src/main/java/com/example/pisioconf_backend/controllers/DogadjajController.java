@@ -42,4 +42,10 @@ public class DogadjajController // extends CrudController<Integer, AssetTypeRequ
     public Dogadjaj insert(@RequestBody @Valid DogadjajRequest dogadjajRequest) throws NotFoundException {
         return dogadjajService.insert(dogadjajRequest);
     }
+
+
+    @PatchMapping("/{id}")
+    public Dogadjaj update(@PathVariable Integer id, @RequestBody DogadjajRequest dogadjajRequest) throws NotFoundException {
+        return dogadjajService.update(id, dogadjajRequest);
+    }
 }

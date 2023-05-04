@@ -43,4 +43,9 @@ public class PosjetilacImplService implements PosjetilacService {
     public List<Posjetilac> findAll() {
         return posjetilacRepository.findAll().stream().map(l -> modelMapper.map(l, Posjetilac.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public void delete(PosjetilacEntityPK id) {
+        posjetilacRepository.deleteById(id);
+    }
 }

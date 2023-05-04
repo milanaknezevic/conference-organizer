@@ -2,10 +2,13 @@ package com.example.pisioconf_backend.controllers;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Konferencija;
+import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.dto.Rezervacija;
+import com.example.pisioconf_backend.models.entities.OcjenaEntityPK;
 import com.example.pisioconf_backend.models.entities.RezervacijaEntity;
 import com.example.pisioconf_backend.models.entities.RezervacijaEntityPK;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
+import com.example.pisioconf_backend.models.requests.OcjenaRequest;
 import com.example.pisioconf_backend.models.requests.RezervacijaRequest;
 import com.example.pisioconf_backend.services.RezervacijaService;
 import org.springframework.http.HttpStatus;
@@ -28,19 +31,37 @@ public class RezervacijaController {
     public RezervacijaEntity insert(@RequestBody @Valid RezervacijaRequest rezervacijaRequest) throws NotFoundException {
         return rezervacijaService.insert(rezervacijaRequest);
     }
+
     @GetMapping
     List<Rezervacija> findAll() {
         return rezervacijaService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    @GetMapping("/{resursId}/{dogadjajId}")
+    public Rezervacija findById(@PathVariable Integer resursId, @PathVariable Integer dogadjajId) throws NotFoundException {
+        RezervacijaEntityPK id = new RezervacijaEntityPK();
+        id.setResursId(resursId);
+        id.setDogadjajId(dogadjajId);
+        return rezervacijaService.findById(id);
+    }
+
+    @PatchMapping("/{resursId}/{dogadjajId}")
+    public Rezervacija update(@PathVariable Integer resursId, @PathVariable Integer dogadjajId, @RequestBody RezervacijaRequest rezervacijaRequest) throws NotFoundException {
+
+
+        RezervacijaEntityPK id = new RezervacijaEntityPK();
+        id.setResursId(resursId);
+        id.setDogadjajId(dogadjajId);
+        return rezervacijaService.update(id, rezervacijaRequest);
+
+    }
+
+    @DeleteMapping("/{resursId}/{dogadjajId}")
+    public void delete(@PathVariable Integer resursId, @PathVariable Integer dogadjajId) {
+        RezervacijaEntityPK id = new RezervacijaEntityPK();
+        id.setResursId(resursId);
+        id.setDogadjajId(dogadjajId);
         rezervacijaService.delete(id);
     }
-//    @PatchMapping("/{resursId}/{dogadjajId}")
-//    public Rezervacija update(@PathVariable Integer resursId,@PathVariable Integer dogadjajId, @RequestBody RezervacijaRequest rezervacijaRequest) throws NotFoundException {
-//        RezervacijaEntityPK id=new RezervacijaEntityPK(resursId,dogadjajId);
-//        return rezervacijaService.update(id, rezervacijaRequest);
-//    }
 
 }

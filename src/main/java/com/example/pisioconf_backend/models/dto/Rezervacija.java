@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class Rezervacija {
     private Integer kolicina;
+    private Resurs resurs;
 }

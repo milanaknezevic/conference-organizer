@@ -5,5 +5,5 @@ import lombok.Data;
 
 @Data
 public class Posjetilac {
-    private Korisnik posjetilac;
+    private Korisnik korisnik;
 }

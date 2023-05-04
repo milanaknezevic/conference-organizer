@@ -2,11 +2,9 @@ package com.example.pisioconf_backend.services.impl;
 
 import com.example.pisioconf_backend.controllers.repositories.OcjenaRepository;
 import com.example.pisioconf_backend.exception.NotFoundException;
-import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Ocjena;
-import com.example.pisioconf_backend.models.dto.Rezervacija;
-import com.example.pisioconf_backend.models.entities.*;
-import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
+import com.example.pisioconf_backend.models.entities.OcjenaEntity;
+import com.example.pisioconf_backend.models.entities.OcjenaEntityPK;
 import com.example.pisioconf_backend.models.requests.OcjenaRequest;
 import com.example.pisioconf_backend.services.OcjenaService;
 import org.modelmapper.ModelMapper;
@@ -45,25 +43,22 @@ public class OcjenaImplService implements OcjenaService {
 
     }
 
+    @Override
+    public Ocjena update(OcjenaEntityPK id, OcjenaRequest ocjenaRequest) throws NotFoundException {
+        OcjenaEntity ocjenaEntity = ocjenaRepository.findById(id).get();
+        if (ocjenaRequest.getKomentar() != null) {
+            ocjenaEntity.setKomentar(ocjenaRequest.getKomentar());
+        }
+        if (ocjenaRequest.getZvjezdica() != null) {
+            ocjenaEntity.setZvjezdica(ocjenaRequest.getZvjezdica());
+        }
+        ocjenaEntity.setId(id);
+        ocjenaEntity = ocjenaRepository.saveAndFlush(ocjenaEntity);
+        return null; // findById(ocjenaEntity.getId());
+    }
 
-//    public Ocjena update(Integer id, OcjenaRequest ocjenaRequest) throws NotFoundException {
-//        KonferencijaEntity konferencijaEntity = konferencijaRepository.findById(id).get(); // modelMapper.map(konferencijaRequest, KonferencijaEntity.class);
-//        if (konferencijaRequest.getStartTime() != null) {
-//            konferencijaEntity.setStartTime(konferencijaRequest.getStartTime());
-//        }
-//        if (konferencijaRequest.getEndTime() != null) {
-//            konferencijaEntity.setEndTime(konferencijaRequest.getEndTime());
-//        }
-//        if (konferencijaRequest.getStatus() != null) {
-//            konferencijaEntity.setStatus(konferencijaRequest.getStatus());
-//        }
-//        if (konferencijaRequest.getNaziv() != null) {
-//            konferencijaEntity.setNaziv(konferencijaRequest.getNaziv());
-//        }
-//
-//        konferencijaEntity.setId(id);
-//
-//        konferencijaEntity = konferencijaRepository.saveAndFlush(konferencijaEntity);
-//        return findById(konferencijaEntity.getId());
-//    }
+    @Override
+    public void delete(OcjenaEntityPK id) {
+        ocjenaRepository.deleteById(id);
+    }
 }

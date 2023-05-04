@@ -5,6 +5,7 @@ import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.dto.Posjetilac;
 import com.example.pisioconf_backend.models.entities.OcjenaEntity;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntity;
+import com.example.pisioconf_backend.models.entities.PosjetilacEntityPK;
 import com.example.pisioconf_backend.models.requests.OcjenaRequest;
 import com.example.pisioconf_backend.models.requests.PosjetilacRequest;
 import com.example.pisioconf_backend.services.PosjetilacService;
@@ -32,5 +33,14 @@ public class PosjetilacController {
     List<Posjetilac> findAll() {
         return posjetilacService.findAll();
     }
+
+    @DeleteMapping("/{korisnikId}/{dogadjajId}")
+    public void delete(@PathVariable Integer korisnikId,@PathVariable Integer dogadjajId) {
+        PosjetilacEntityPK id=new PosjetilacEntityPK();
+        id.setDogadjajId(dogadjajId);
+        id.setKorisnikId(korisnikId);
+        posjetilacService.delete(id);
+    }
+
 
 }

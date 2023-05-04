@@ -3,8 +3,10 @@ package com.example.pisioconf_backend.services.impl;
 import com.example.pisioconf_backend.controllers.repositories.KonferencijaRepository;
 import com.example.pisioconf_backend.controllers.repositories.KorisnikRepository;
 import com.example.pisioconf_backend.controllers.repositories.LokacijaRepository;
+import com.example.pisioconf_backend.controllers.repositories.OcjenaRepository;
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Konferencija;
+import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.entities.KorisnikEntity;
 import com.example.pisioconf_backend.models.entities.LokacijaEntity;
@@ -22,14 +24,17 @@ public class KonferencijaImplService implements KonferencijaService {
     private final KorisnikRepository korisnikRepository;
     private final ModelMapper modelMapper;
     private final LokacijaRepository lokacijaRepository;
+    private final OcjenaRepository ocjenaRepository;
 
     public KonferencijaImplService(KonferencijaRepository konferencijaRepository, KorisnikRepository korisnikRepository, ModelMapper modelMapper,
-                                   LokacijaRepository lokacijaRepository) {
+                                   LokacijaRepository lokacijaRepository,
+                                   OcjenaRepository ocjenaRepository) {
         this.konferencijaRepository = konferencijaRepository;
         this.korisnikRepository = korisnikRepository;
 
         this.modelMapper = modelMapper;
         this.lokacijaRepository = lokacijaRepository;
+        this.ocjenaRepository = ocjenaRepository;
     }
 
 
@@ -86,6 +91,12 @@ public class KonferencijaImplService implements KonferencijaService {
     @Override
     public void delete(Integer id) {
         konferencijaRepository.deleteById(id);
+
+    }
+
+    @Override
+    public List<Ocjena> getAllOcjeneByKorisnikId(Integer id) {
+        return konferencijaRepository.getAllOcjeneByKorisnikId(id).stream().map(l -> modelMapper.map(l, Ocjena.class)).collect(Collectors.toList());
 
     }
 

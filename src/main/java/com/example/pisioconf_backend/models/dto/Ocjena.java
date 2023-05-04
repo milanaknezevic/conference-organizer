@@ -6,4 +6,5 @@ import lombok.Data;
 public class Ocjena {
     private Integer zvjezdica;
     private String komentar;
+    private Korisnik korisnik;
 }
