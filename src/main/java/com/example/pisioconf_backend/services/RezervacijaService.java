@@ -12,6 +12,8 @@ public interface RezervacijaService {
     RezervacijaEntity insert(RezervacijaRequest rezervacijaRequest) throws NotFoundException;
     List<Rezervacija> findAll();
 
+    List<RezervacijaEntity> findAllByDogadjajId(Integer id) throws NotFoundException;
+
     void delete(RezervacijaEntityPK id);
 
 

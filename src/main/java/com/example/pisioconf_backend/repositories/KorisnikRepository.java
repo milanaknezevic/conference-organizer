@@ -1,4 +1,4 @@
-package com.example.pisioconf_backend.controllers.repositories;
+package com.example.pisioconf_backend.repositories;
 
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.entities.KorisnikEntity;

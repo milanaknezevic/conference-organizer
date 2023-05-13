@@ -1,12 +1,13 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.controllers.repositories.OcjenaRepository;
+import com.example.pisioconf_backend.services.OcjenaService;
+import com.example.pisioconf_backend.repositories.OcjenaRepository;
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.OcjenaEntity;
 import com.example.pisioconf_backend.models.entities.OcjenaEntityPK;
 import com.example.pisioconf_backend.models.requests.OcjenaRequest;
-import com.example.pisioconf_backend.services.OcjenaService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class OcjenaImplService implements OcjenaService {
     private final ModelMapper modelMapper;
     private final OcjenaRepository ocjenaRepository;

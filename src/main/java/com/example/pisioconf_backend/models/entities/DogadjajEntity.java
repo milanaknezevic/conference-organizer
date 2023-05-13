@@ -1,7 +1,7 @@
 package com.example.pisioconf_backend.models.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -39,5 +39,8 @@ public class DogadjajEntity {
     private List<PosjetilacEntity> posjetioci;
     @OneToMany(mappedBy = "dogadjajByDogadjajId")
     private List<RezervacijaEntity> rezervacije;
+    @OneToOne
+    @JoinColumn(name = "SOBA_id", referencedColumnName = "id", nullable = false)
+    private SobaEntity sobaBySobaId;
 
 }

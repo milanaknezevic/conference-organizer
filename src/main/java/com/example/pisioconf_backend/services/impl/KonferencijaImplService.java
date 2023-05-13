@@ -1,9 +1,9 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.controllers.repositories.KonferencijaRepository;
-import com.example.pisioconf_backend.controllers.repositories.KorisnikRepository;
-import com.example.pisioconf_backend.controllers.repositories.LokacijaRepository;
-import com.example.pisioconf_backend.controllers.repositories.OcjenaRepository;
+import com.example.pisioconf_backend.repositories.KonferencijaRepository;
+import com.example.pisioconf_backend.repositories.KorisnikRepository;
+import com.example.pisioconf_backend.repositories.LokacijaRepository;
+import com.example.pisioconf_backend.repositories.OcjenaRepository;
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Ocjena;
@@ -12,13 +12,18 @@ import com.example.pisioconf_backend.models.entities.KorisnikEntity;
 import com.example.pisioconf_backend.models.entities.LokacijaEntity;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
 import com.example.pisioconf_backend.services.KonferencijaService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class KonferencijaImplService implements KonferencijaService {
     private final KonferencijaRepository konferencijaRepository;
     private final KorisnikRepository korisnikRepository;
@@ -42,6 +47,7 @@ public class KonferencijaImplService implements KonferencijaService {
     public List<Konferencija> findAll() {
         return konferencijaRepository.findAll().stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
     }
+
 
 
     @Override
@@ -101,10 +107,33 @@ public class KonferencijaImplService implements KonferencijaService {
     }
 
 
+
     @Override
     public Konferencija findById(Integer id) throws NotFoundException {
         return modelMapper.map(konferencijaRepository.findById(id).orElseThrow(NotFoundException::new), Konferencija.class);
     }
 
+    @Override
+    public List<KonferencijaEntity> findAllWhereKonferencijaIsNotFinished() {
+        return konferencijaRepository.getAllNotFinishedKonferencije();
+    }
 
+    @Scheduled(cron = "0 * * * * *")
+    public void checkStatusKonferencije()
+    {
+        //uzmi sve konferencije i proci kroz njih i provjeravam dal je zavrsena ako jeste finished jednako ture
+        LocalDateTime now = LocalDateTime.now();
+        List<KonferencijaEntity> nezavrseneKonferencije=findAllWhereKonferencijaIsNotFinished();
+        for(KonferencijaEntity k:nezavrseneKonferencije)
+        {
+            LocalDateTime vrijeme=LocalDateTime.ofInstant(k.getEndTime().toInstant(), ZoneId.systemDefault());
+            if(vrijeme.isAfter(now))
+            {
+                k.setStatus(true);
+                k=konferencijaRepository.saveAndFlush(k);
+            }
+        }
+
+
+    }
 }

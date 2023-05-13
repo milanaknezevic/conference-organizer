@@ -24,4 +24,5 @@ public interface KonferencijaService //extends CrudService<Integer> {
     void delete(Integer id);
     List<Ocjena> getAllOcjeneByKorisnikId(Integer id);
 
+    List<KonferencijaEntity> findAllWhereKonferencijaIsNotFinished();
 }

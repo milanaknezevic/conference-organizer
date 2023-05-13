@@ -1,4 +1,4 @@
-package com.example.pisioconf_backend.controllers.repositories;
+package com.example.pisioconf_backend.repositories;
 
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.entities.OcjenaEntity;
@@ -16,5 +16,8 @@ public interface KonferencijaRepository extends JpaRepository<KonferencijaEntity
 
     @Query("select o from OcjenaEntity  o where o.korisnikByKorisnikId.id=:id")
     List<OcjenaEntity> getAllOcjeneByKorisnikId(Integer id);
+
+    @Query("select k from KonferencijaEntity k where k.status=false")
+    List<KonferencijaEntity> getAllNotFinishedKonferencije();
 
 }

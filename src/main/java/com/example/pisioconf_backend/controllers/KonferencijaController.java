@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/konferencije")
@@ -31,6 +30,12 @@ public class KonferencijaController {
     @GetMapping("/{id}")
     public Konferencija findById(@PathVariable Integer id) throws NotFoundException {
         return konferencijaService.findById(id);
+    }
+
+    @GetMapping("/nezavrsene")
+    List<KonferencijaEntity> findAllWhereKonferencijaIsNotFInished()
+    {
+        return  konferencijaService.findAllWhereKonferencijaIsNotFinished();
     }
     @GetMapping("/{idKonferencije}/ocjene")
     public List<Ocjena> findAllOcjeneForKonferencija(@PathVariable Integer idKonferencije) throws NotFoundException{

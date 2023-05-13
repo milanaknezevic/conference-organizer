@@ -1,14 +1,14 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.controllers.repositories.DogadjajRepository;
-import com.example.pisioconf_backend.controllers.repositories.ResursRepository;
-import com.example.pisioconf_backend.controllers.repositories.RezervacijaRepository;
+import com.example.pisioconf_backend.repositories.DogadjajRepository;
+import com.example.pisioconf_backend.repositories.ResursRepository;
+import com.example.pisioconf_backend.repositories.RezervacijaRepository;
 import com.example.pisioconf_backend.exception.NotFoundException;
-import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Rezervacija;
 import com.example.pisioconf_backend.models.entities.*;
 import com.example.pisioconf_backend.models.requests.RezervacijaRequest;
 import com.example.pisioconf_backend.services.RezervacijaService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class RezervacijaImplService implements RezervacijaService {
     private final ModelMapper modelMapper;
     private final RezervacijaRepository rezervacijaRepository;
@@ -45,11 +46,12 @@ public class RezervacijaImplService implements RezervacijaService {
             rezervacijaEntity.setResursByResursId(resurs);
             rezervacijaEntity.setDogadjajByDogadjajId(dogadjaj);
         }
-        if(rezervacijaRequest.getKolicina()>resurs.getKolicina())
-        {
+        if (rezervacijaRequest.getKolicina() > resurs.getKolicina()) {
             throw new NotFoundException();//nije not found vec trebam napraviti novi exc
         }
-
+        //smanjiti u resursu uzete resurse
+        resurs.setKolicina(resurs.getKolicina() - rezervacijaRequest.getKolicina());
+        resurs = resursRepository.saveAndFlush(resurs);
 
         rezervacijaEntity = rezervacijaRepository.saveAndFlush(rezervacijaEntity);
 
@@ -60,6 +62,13 @@ public class RezervacijaImplService implements RezervacijaService {
     public List<Rezervacija> findAll() {
         return rezervacijaRepository.findAll().stream().map(l -> modelMapper.map(l, Rezervacija.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<RezervacijaEntity> findAllByDogadjajId(Integer id) throws NotFoundException {
+        return rezervacijaRepository.getAllRezervacijeByDogadjajID(id);
+
+    }
+
 
     @Override
     public void delete(RezervacijaEntityPK id) {

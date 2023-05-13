@@ -14,14 +14,15 @@ public class SobaEntity {
     @Basic
     @Column(name = "naziv")
     private String naziv;
-    @Basic
-    @Column(name = "kapacitet")
-    private String kapacitet;
+//    @Basic
+//    @Column(name = "kapacitet")
+//    private String kapacitet;
     @Basic
     @Column(name = "status")
     private Boolean status;
     @ManyToOne
     @JoinColumn(name = "LOKACIJA_id", referencedColumnName = "id", nullable = false)
     private LokacijaEntity lokacijaByLokacijaId;
-
+    @OneToOne(mappedBy = "sobaBySobaId")
+    private DogadjajEntity dogadjaj;
 }

@@ -1,6 +1,5 @@
 package com.example.pisioconf_backend.controllers;
 
-import com.example.pisioconf_backend.models.dto.Dogadjaj;
 import com.example.pisioconf_backend.models.dto.TipDogadjaja;
 import com.example.pisioconf_backend.services.TipDogadjajaService;
 import org.springframework.web.bind.annotation.GetMapping;

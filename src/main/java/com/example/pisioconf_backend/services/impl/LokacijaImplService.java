@@ -1,8 +1,9 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.models.dto.Lokacija;
-import com.example.pisioconf_backend.controllers.repositories.LokacijaRepository;
 import com.example.pisioconf_backend.services.LokacijaService;
+import com.example.pisioconf_backend.models.dto.Lokacija;
+import com.example.pisioconf_backend.repositories.LokacijaRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class LokacijaImplService implements LokacijaService {
 
     private final LokacijaRepository lokacijaRepository;

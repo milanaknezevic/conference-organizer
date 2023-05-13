@@ -1,8 +1,9 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.models.dto.TipDogadjaja;
-import com.example.pisioconf_backend.controllers.repositories.TipDogadjajaRepository;
 import com.example.pisioconf_backend.services.TipDogadjajaService;
+import com.example.pisioconf_backend.models.dto.TipDogadjaja;
+import com.example.pisioconf_backend.repositories.TipDogadjajaRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TipDogadjajaImplService implements TipDogadjajaService {
     private final ModelMapper modelMapper;
     private final TipDogadjajaRepository tipDogadjajaRepository;

@@ -1,10 +1,7 @@
 package com.example.pisioconf_backend.controllers;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
-import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Sesija;
-import com.example.pisioconf_backend.models.dto.TipDogadjaja;
-import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
 import com.example.pisioconf_backend.models.requests.SesijaRequest;
 import com.example.pisioconf_backend.services.SesijaService;
 import org.springframework.http.HttpStatus;

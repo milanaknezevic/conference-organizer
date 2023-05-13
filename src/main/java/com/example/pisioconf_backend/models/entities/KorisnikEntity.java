@@ -1,5 +1,6 @@
 package com.example.pisioconf_backend.models.entities;
 
+import com.example.pisioconf_backend.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,8 +18,9 @@ public class KorisnikEntity {
     @Column(name = "naziv")
     private String naziv;
     @Basic
-    @Column(name = "rola")
-    private Integer rola;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "rola", nullable = false)
+    private Role rola;
     @Basic
     @Column(name = "email")
     private String email;
@@ -29,8 +31,9 @@ public class KorisnikEntity {
     @Column(name = "password")
     private String password;
     @Basic
-    @Column(name = "status")
-    private Boolean status;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", nullable = false)
+    private Status status;
     @OneToMany(mappedBy = "korisnikByModeratorId")
     private List<KonferencijaEntity> konferencijeModeratora;
     @OneToMany(mappedBy = "korisnikByOrganizatorId")
@@ -40,4 +43,7 @@ public class KorisnikEntity {
     @OneToMany(mappedBy = "korisnikByKorisnikId")
     private List<PosjetilacEntity> posjetioci;
 
+    public enum Status {
+        REQUESTED, ACTIVE, BLOCKED
+    }
 }

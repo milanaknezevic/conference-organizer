@@ -1,14 +1,9 @@
 package com.example.pisioconf_backend.controllers;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
-import com.example.pisioconf_backend.models.dto.Konferencija;
-import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.dto.Rezervacija;
-import com.example.pisioconf_backend.models.entities.OcjenaEntityPK;
 import com.example.pisioconf_backend.models.entities.RezervacijaEntity;
 import com.example.pisioconf_backend.models.entities.RezervacijaEntityPK;
-import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
-import com.example.pisioconf_backend.models.requests.OcjenaRequest;
 import com.example.pisioconf_backend.models.requests.RezervacijaRequest;
 import com.example.pisioconf_backend.services.RezervacijaService;
 import org.springframework.http.HttpStatus;
@@ -43,6 +38,12 @@ public class RezervacijaController {
         id.setResursId(resursId);
         id.setDogadjajId(dogadjajId);
         return rezervacijaService.findById(id);
+    }
+
+    @GetMapping("/{dogadjajId}")
+    public List<RezervacijaEntity> findByDogadjajId(@PathVariable Integer dogadjajId) throws NotFoundException
+    {
+        return  rezervacijaService.findAllByDogadjajId(dogadjajId);
     }
 
     @PatchMapping("/{resursId}/{dogadjajId}")
