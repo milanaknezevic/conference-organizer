@@ -19,5 +19,7 @@ public interface KonferencijaRepository extends JpaRepository<KonferencijaEntity
 
     @Query("select k from KonferencijaEntity k where k.status=false")
     List<KonferencijaEntity> getAllNotFinishedKonferencije();
+    @Query("select k from KonferencijaEntity k where k.korisnikByModeratorId.id=:id")
+    List<KonferencijaEntity> findAllKonferencijeByModeratorId(Integer id);
 
 }

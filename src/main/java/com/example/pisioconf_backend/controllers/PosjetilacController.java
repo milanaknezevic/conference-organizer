@@ -1,6 +1,7 @@
 package com.example.pisioconf_backend.controllers;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
+import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.dto.Posjetilac;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntity;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntityPK;
@@ -30,6 +31,8 @@ public class PosjetilacController {
     List<Posjetilac> findAll() {
         return posjetilacService.findAll();
     }
+
+
 
     @DeleteMapping("/{korisnikId}/{dogadjajId}")
     public void delete(@PathVariable Integer korisnikId,@PathVariable Integer dogadjajId) {

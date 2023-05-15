@@ -1,6 +1,7 @@
 package com.example.pisioconf_backend.services.impl;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
+import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.OcjenaEntity;
 import com.example.pisioconf_backend.models.entities.OcjenaEntityPK;
@@ -61,5 +62,10 @@ public class OcjenaImplService implements OcjenaService {
     @Override
     public void delete(OcjenaEntityPK id) {
         ocjenaRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Ocjena> findAllOcjeneByKonferencijaId(Integer idKonferencije) {
+        return ocjenaRepository.findAllByKonferencijaByKonferencijaId(idKonferencije).stream().map(l -> modelMapper.map(l, Ocjena.class)).collect(Collectors.toList());
     }
 }

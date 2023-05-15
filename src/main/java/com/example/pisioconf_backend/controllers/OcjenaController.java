@@ -1,6 +1,7 @@
 package com.example.pisioconf_backend.controllers;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
+import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.OcjenaEntity;
 import com.example.pisioconf_backend.models.entities.OcjenaEntityPK;
@@ -27,11 +28,17 @@ public class OcjenaController {
         return ocjenaService.insert(ocjenaRequest);
     }
 
+
+    @GetMapping("/{idKonferencije}")
+    List<Ocjena> findAllOcjeneByKonferencijaId(@PathVariable Integer idKonferencije) {
+        return ocjenaService.findAllOcjeneByKonferencijaId(idKonferencije);
+    }
+
     @GetMapping
     List<Ocjena> findAll() {
         return ocjenaService.findAll();
     }
-
+//mozda dodati pregled svih ocjena za neku konferenciju
 
     @PatchMapping("/{korisnikId}/{konferencijaId}")
     public Ocjena update(@PathVariable Integer korisnikId, @PathVariable Integer konferencijaId, @RequestBody OcjenaRequest ocjenaRequest) throws NotFoundException {

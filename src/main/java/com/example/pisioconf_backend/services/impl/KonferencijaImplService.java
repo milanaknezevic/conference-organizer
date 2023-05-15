@@ -1,12 +1,8 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.repositories.KonferencijaRepository;
-import com.example.pisioconf_backend.repositories.KorisnikRepository;
-import com.example.pisioconf_backend.repositories.LokacijaRepository;
-import com.example.pisioconf_backend.repositories.OcjenaRepository;
+import com.example.pisioconf_backend.models.dto.*;
+import com.example.pisioconf_backend.repositories.*;
 import com.example.pisioconf_backend.exception.NotFoundException;
-import com.example.pisioconf_backend.models.dto.Konferencija;
-import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.entities.KorisnikEntity;
 import com.example.pisioconf_backend.models.entities.LokacijaEntity;
@@ -30,16 +26,18 @@ public class KonferencijaImplService implements KonferencijaService {
     private final ModelMapper modelMapper;
     private final LokacijaRepository lokacijaRepository;
     private final OcjenaRepository ocjenaRepository;
+    private final DogadjajRepository dogadjajRepository;
 
     public KonferencijaImplService(KonferencijaRepository konferencijaRepository, KorisnikRepository korisnikRepository, ModelMapper modelMapper,
                                    LokacijaRepository lokacijaRepository,
-                                   OcjenaRepository ocjenaRepository) {
+                                   OcjenaRepository ocjenaRepository, DogadjajRepository dogadjajRepository) {
         this.konferencijaRepository = konferencijaRepository;
         this.korisnikRepository = korisnikRepository;
 
         this.modelMapper = modelMapper;
         this.lokacijaRepository = lokacijaRepository;
         this.ocjenaRepository = ocjenaRepository;
+        this.dogadjajRepository = dogadjajRepository;
     }
 
 
@@ -48,6 +46,10 @@ public class KonferencijaImplService implements KonferencijaService {
         return konferencijaRepository.findAll().stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Konferencija> findAllByModeratorId(Integer id) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByModeratorId(id).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+    }
 
 
     @Override
@@ -117,6 +119,8 @@ public class KonferencijaImplService implements KonferencijaService {
     public List<KonferencijaEntity> findAllWhereKonferencijaIsNotFinished() {
         return konferencijaRepository.getAllNotFinishedKonferencije();
     }
+
+
 
     @Scheduled(cron = "0 * * * * *")
     public void checkStatusKonferencije()

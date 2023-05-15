@@ -2,15 +2,91 @@
   "rules": [
     {
       "methods": ["GET"],
-      "pattern": "/konferencije",
-      "roles": ["ADMIN","USER"]
+      "pattern": "/konferencije/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["POST","PATCH","DELETE"],
+      "pattern": "/konferencije/*",
+      "roles": ["ORGANIZATOR"]
     },
     {
       "methods": ["GET"],
-      "pattern": "/dogadjaji",
+      "pattern": "/ocjene/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/posjetioci/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["DELETE", "POST", "PATCH"],
+      "pattern": "/rezervacije/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/rezervacije/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/resursi/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/lokacije/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/tipoviDOgadjaja/*",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/konferencije/*/moderator-conf",
       "roles": [
-        "USER"
+        "MODERATOR"
       ]
+    },
+    {
+      "methods": ["POST","PATCH"],
+      "pattern": "/ocjene",
+      "roles": ["MODERATOR"]
+    },
+    {
+      "methods": ["PATCH"],
+      "pattern": "/korisnici/*/status",
+      "roles": [
+        "ADMIN"
+      ]
+    },
+    {
+      "methods": ["PATCH"],
+      "pattern": "/korisnici/*/role",
+      "roles": [
+        "ADMIN"
+      ]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/korisnici/*",
+      "roles": [
+        "ADMIN"
+      ]
+    },
+    {
+      "methods": ["POST"],
+      "pattern": "/posjetioci",
+      "roles": ["POSJETILAC"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/konferencije",
+      "roles": ["POSJETILAC"]
     }
   ]
 }

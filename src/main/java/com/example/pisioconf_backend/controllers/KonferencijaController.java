@@ -2,6 +2,7 @@ package com.example.pisioconf_backend.controllers;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Konferencija;
+import com.example.pisioconf_backend.models.dto.Korisnik;
 import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
@@ -26,6 +27,12 @@ public class KonferencijaController {
     List<Konferencija> findAll() {
         return konferencijaService.findAll();
     }
+    @GetMapping("/{idModeratora}/moderator-conf")
+    List<Konferencija> findAllByModeratorId(@PathVariable Integer idModeratora) {
+        return konferencijaService.findAllByModeratorId(idModeratora);
+    }
+
+
 
     @GetMapping("/{id}")
     public Konferencija findById(@PathVariable Integer id) throws NotFoundException {
@@ -53,6 +60,8 @@ public class KonferencijaController {
     public Konferencija insert(@RequestBody @Valid KonferencijaRequest konferencijaRequest) throws NotFoundException {
         return konferencijaService.insert(konferencijaRequest);
     }
+
+
 
     @PatchMapping("/{id}")
     public Konferencija update(@PathVariable Integer id, @RequestBody KonferencijaRequest konferencijaRequest) throws NotFoundException {

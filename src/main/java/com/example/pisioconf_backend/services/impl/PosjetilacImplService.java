@@ -1,6 +1,7 @@
 package com.example.pisioconf_backend.services.impl;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
+import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.dto.Posjetilac;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntity;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntityPK;
@@ -47,4 +48,6 @@ public class PosjetilacImplService implements PosjetilacService {
     public void delete(PosjetilacEntityPK id) {
         posjetilacRepository.deleteById(id);
     }
+
+
 }

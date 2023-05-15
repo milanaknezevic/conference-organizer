@@ -2,6 +2,7 @@ package com.example.pisioconf_backend.services;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Konferencija;
+import com.example.pisioconf_backend.models.dto.Korisnik;
 import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
@@ -11,6 +12,7 @@ import java.util.List;
 public interface KonferencijaService //extends CrudService<Integer> {
 {
     List<Konferencija> findAll();
+    List<Konferencija> findAllByModeratorId(Integer id) throws NotFoundException;
 
     Konferencija findById(Integer id) throws NotFoundException;
 
@@ -24,4 +26,6 @@ public interface KonferencijaService //extends CrudService<Integer> {
     List<Ocjena> getAllOcjeneByKorisnikId(Integer id);
 
     List<KonferencijaEntity> findAllWhereKonferencijaIsNotFinished();
+
+
 }
