@@ -7,7 +7,6 @@ import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
 
 import java.util.List;
-import java.util.Map;
 
 public interface KonferencijaService //extends CrudService<Integer> {
 {

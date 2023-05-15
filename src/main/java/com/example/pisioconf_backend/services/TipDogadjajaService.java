@@ -1,6 +1,5 @@
 package com.example.pisioconf_backend.services;
 
-import com.example.pisioconf_backend.models.dto.Dogadjaj;
 import com.example.pisioconf_backend.models.dto.TipDogadjaja;
 
 import java.util.List;

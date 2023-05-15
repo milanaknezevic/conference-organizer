@@ -1,11 +1,10 @@
 package com.example.pisioconf_backend.models.entities;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
 @Data
 @Entity
 @Table(name = "sesija")

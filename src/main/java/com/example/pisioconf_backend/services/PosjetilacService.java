@@ -5,7 +5,6 @@ import com.example.pisioconf_backend.models.dto.Posjetilac;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntity;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntityPK;
 import com.example.pisioconf_backend.models.requests.PosjetilacRequest;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

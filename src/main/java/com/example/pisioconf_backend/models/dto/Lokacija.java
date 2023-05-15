@@ -1,8 +1,6 @@
 package com.example.pisioconf_backend.models.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.List;
 

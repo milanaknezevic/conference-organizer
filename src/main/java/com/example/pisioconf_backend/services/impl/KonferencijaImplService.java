@@ -12,7 +12,7 @@ import com.example.pisioconf_backend.models.entities.KorisnikEntity;
 import com.example.pisioconf_backend.models.entities.LokacijaEntity;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
 import com.example.pisioconf_backend.services.KonferencijaService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

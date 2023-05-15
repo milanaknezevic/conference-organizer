@@ -1,11 +1,10 @@
 package com.example.pisioconf_backend.models.entities;
 
 import com.example.pisioconf_backend.models.enums.Role;
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.List;
-
 @Data
 @Entity
 @Table(name = "korisnik")

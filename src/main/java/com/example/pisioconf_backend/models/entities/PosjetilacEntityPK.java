@@ -1,10 +1,10 @@
 package com.example.pisioconf_backend.models.entities;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 @Embeddable

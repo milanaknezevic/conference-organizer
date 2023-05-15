@@ -1,16 +1,16 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.repositories.PosjetilacRepository;
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Posjetilac;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntity;
 import com.example.pisioconf_backend.models.entities.PosjetilacEntityPK;
 import com.example.pisioconf_backend.models.requests.PosjetilacRequest;
+import com.example.pisioconf_backend.repositories.PosjetilacRepository;
 import com.example.pisioconf_backend.services.PosjetilacService;
-import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service

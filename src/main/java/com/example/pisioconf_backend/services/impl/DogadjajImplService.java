@@ -6,11 +6,11 @@ import com.example.pisioconf_backend.models.entities.*;
 import com.example.pisioconf_backend.models.requests.DogadjajRequest;
 import com.example.pisioconf_backend.repositories.*;
 import com.example.pisioconf_backend.services.DogadjajService;
-import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;

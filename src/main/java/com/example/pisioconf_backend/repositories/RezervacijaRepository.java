@@ -1,6 +1,5 @@
 package com.example.pisioconf_backend.repositories;
 
-import com.example.pisioconf_backend.models.entities.OcjenaEntity;
 import com.example.pisioconf_backend.models.entities.RezervacijaEntity;
 import com.example.pisioconf_backend.models.entities.RezervacijaEntityPK;
 import org.springframework.data.jpa.repository.JpaRepository;

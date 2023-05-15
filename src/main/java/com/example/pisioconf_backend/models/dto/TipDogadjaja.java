@@ -1,6 +1,5 @@
 package com.example.pisioconf_backend.models.dto;
 
-import com.example.pisioconf_backend.models.entities.DogadjajEntity;
 import lombok.Data;
 
 import java.util.List;

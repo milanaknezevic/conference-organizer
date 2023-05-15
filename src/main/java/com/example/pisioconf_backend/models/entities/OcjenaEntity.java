@@ -1,10 +1,8 @@
 package com.example.pisioconf_backend.models.entities;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
-import java.util.Objects;
-
+import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "ocjena")

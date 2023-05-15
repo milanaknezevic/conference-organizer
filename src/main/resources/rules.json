@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "methods": ["GET"],
+      "pattern": "/konferencije",
+      "roles": ["ADMIN","USER"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/dogadjaji",
+      "roles": [
+        "USER"
+      ]
+    }
+  ]
+}

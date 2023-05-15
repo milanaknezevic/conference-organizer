@@ -1,6 +1,5 @@
 package com.example.pisioconf_backend.models.requests;
 
-import com.example.pisioconf_backend.models.dto.Lokacija;
 import lombok.Data;
 
 import java.util.Date;

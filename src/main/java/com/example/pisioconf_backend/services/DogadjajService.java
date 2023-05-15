@@ -2,9 +2,7 @@ package com.example.pisioconf_backend.services;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Dogadjaj;
-import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.requests.DogadjajRequest;
-import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
 
 import java.util.List;
 

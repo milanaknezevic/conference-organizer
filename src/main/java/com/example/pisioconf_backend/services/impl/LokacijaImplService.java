@@ -1,12 +1,12 @@
 package com.example.pisioconf_backend.services.impl;
 
-import com.example.pisioconf_backend.services.LokacijaService;
 import com.example.pisioconf_backend.models.dto.Lokacija;
 import com.example.pisioconf_backend.repositories.LokacijaRepository;
-import jakarta.transaction.Transactional;
+import com.example.pisioconf_backend.services.LokacijaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
