@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -120,6 +121,22 @@ public class KonferencijaImplService implements KonferencijaService {
         return konferencijaRepository.getAllNotFinishedKonferencije();
     }
 
+    @Override
+    public List<Konferencija> findAllKonferencijeByStatus(Boolean status) {
+        return konferencijaRepository.findAllKonferencijeByStatus(status).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Konferencija> findAllKonferencijeByDatum(LocalDateTime datum) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByDatum(datum).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Konferencija> findAllKonferencijeByNaziv(String nazivPattern) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByNaziv(nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+    }
 
 
     @Scheduled(cron = "0 * * * * *")

@@ -7,6 +7,8 @@ import com.example.pisioconf_backend.models.dto.Ocjena;
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.requests.KonferencijaRequest;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface KonferencijaService //extends CrudService<Integer> {
@@ -26,6 +28,11 @@ public interface KonferencijaService //extends CrudService<Integer> {
     List<Ocjena> getAllOcjeneByKorisnikId(Integer id);
 
     List<KonferencijaEntity> findAllWhereKonferencijaIsNotFinished();
+
+    List<Konferencija> findAllKonferencijeByStatus(Boolean status);
+    List<Konferencija> findAllKonferencijeByDatum(LocalDateTime datum) throws NotFoundException;
+
+    List<Konferencija> findAllKonferencijeByNaziv(String nazivPattern) throws NotFoundException;
 
 
 }

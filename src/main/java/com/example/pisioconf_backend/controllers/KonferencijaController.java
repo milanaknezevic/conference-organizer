@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,7 +25,30 @@ public class KonferencijaController {
         this.konferencijaService = konferencijaService;
     }
 
-    @GetMapping
+    @GetMapping("/datum")
+    public List<Konferencija> findAllKonferencijeByDatum(@RequestParam("datum") LocalDateTime datum)
+    {
+        return konferencijaService.findAllKonferencijeByDatum(datum);
+    }
+    @GetMapping("/naziv")
+    public List<Konferencija> findAllKonferecijeByNaziv(@RequestParam("naziv") String naziv)
+    {
+        return konferencijaService.findAllKonferencijeByNaziv(naziv);
+    }
+
+
+
+
+
+    @GetMapping("/status")
+    public List<Konferencija> findKonferencijeByStatus(@RequestParam("status") Boolean status)
+    {
+        return konferencijaService.findAllKonferencijeByStatus(status);
+    }
+
+
+
+    @GetMapping("/all")
     List<Konferencija> findAll() {
         return konferencijaService.findAll();
     }
@@ -38,6 +63,9 @@ public class KonferencijaController {
     public Konferencija findById(@PathVariable Integer id) throws NotFoundException {
         return konferencijaService.findById(id);
     }
+
+
+
 
     @GetMapping("/nezavrsene")
     List<KonferencijaEntity> findAllWhereKonferencijaIsNotFInished()

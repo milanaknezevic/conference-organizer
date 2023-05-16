@@ -14,6 +14,7 @@ import com.example.pisioconf_backend.models.requests.ChangeStatusRequest;
 import com.example.pisioconf_backend.models.requests.SignUpRequest;
 import com.example.pisioconf_backend.models.requests.UserUpdateRequest;
 import com.example.pisioconf_backend.repositories.KorisnikRepository;
+import com.example.pisioconf_backend.services.EmailService;
 import com.example.pisioconf_backend.services.KorisnikService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +37,7 @@ public class KorisnikImplService implements KorisnikService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
+    private final EmailService emailService;
 
     @Value("${authorization.default.username:}")
     private String defaultUsername;
@@ -51,11 +52,12 @@ public class KorisnikImplService implements KorisnikService {
     @PersistenceContext
     private EntityManager manager;
 
-    public KorisnikImplService(KorisnikRepository korisnikRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public KorisnikImplService(KorisnikRepository korisnikRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, EmailService emailService) {
         this.korisnikRepository = korisnikRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.emailService = emailService;
     }
 
     @PostConstruct
@@ -111,20 +113,21 @@ public class KorisnikImplService implements KorisnikService {
         KorisnikEntity entity = korisnikRepository.findById(userId).get();
         if (status.toString().equals(UserStatus.REQUESTED.toString()) && UserStatus.ACTIVE.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.ACTIVE);
-            // emailService.sendSimpleMailApproved(entity.getEmail());
+             emailService.sendMailApproved(entity.getEmail());
+
         }
         if (status.toString().equals(UserStatus.BLOCKED.toString()) && UserStatus.ACTIVE.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.ACTIVE);
-            // emailService.sendSimpleMailApproved(entity.getEmail());
+             emailService.sendMailApproved(entity.getEmail());
         }
         if (status.toString().equals(UserStatus.REQUESTED.toString()) && UserStatus.BLOCKED.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.BLOCKED);
-            // emailService.sendSimpleMailNotApproved(entity.getEmail());
+             emailService.sendSimpleMailNotApproved(entity.getEmail());
         }
         if (UserStatus.REQUESTED.equals(request.getStatus())) {
             throw new ForbiddenException();
         }
-        //entity.setStatus(mapper.map(request.getStatus(), KorisnikEntity.Status.class));
+        entity.setStatus(modelMapper.map(request.getStatus(), KorisnikEntity.Status.class));
         korisnikRepository.saveAndFlush(entity);
     }
 
