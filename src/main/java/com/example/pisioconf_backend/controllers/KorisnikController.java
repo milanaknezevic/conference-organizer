@@ -4,6 +4,7 @@ import com.example.pisioconf_backend.exception.ForbiddenException;
 import com.example.pisioconf_backend.models.dto.JwtUser;
 import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Korisnik;
+import com.example.pisioconf_backend.models.requests.ChangePasswordRequest;
 import com.example.pisioconf_backend.models.requests.ChangeRoleRequest;
 import com.example.pisioconf_backend.models.requests.ChangeStatusRequest;
 import com.example.pisioconf_backend.models.requests.UserUpdateRequest;
@@ -58,6 +59,13 @@ public class KorisnikController {
         if (jwtUser.getId().equals(id))
             throw new ForbiddenException();
         korisnikService.changeRole(id, request);
+    }
+
+
+
+    @PostMapping("/{id}/change-password")
+    public void changePassword( @PathVariable Integer id, @Valid @RequestBody ChangePasswordRequest request) throws Exception {
+        korisnikService.updatePassword(id,request);
     }
 
 }

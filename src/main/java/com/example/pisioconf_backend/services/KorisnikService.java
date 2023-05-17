@@ -5,10 +5,7 @@ import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Korisnik;
 import com.example.pisioconf_backend.models.dto.LoginResponse;
 import com.example.pisioconf_backend.models.entities.KorisnikEntity;
-import com.example.pisioconf_backend.models.requests.ChangeRoleRequest;
-import com.example.pisioconf_backend.models.requests.ChangeStatusRequest;
-import com.example.pisioconf_backend.models.requests.SignUpRequest;
-import com.example.pisioconf_backend.models.requests.UserUpdateRequest;
+import com.example.pisioconf_backend.models.requests.*;
 
 import java.util.List;
 
@@ -31,7 +28,7 @@ public interface KorisnikService {
     void changeRole(Integer userId, ChangeRoleRequest request);
 
     Korisnik update(Integer id, UserUpdateRequest user) throws Exception;
-
+    public void updatePassword(Integer id, ChangePasswordRequest request) throws Exception;
 
 
 }

@@ -9,16 +9,16 @@ import com.example.pisioconf_backend.models.dto.LoginResponse;
 import com.example.pisioconf_backend.models.entities.KorisnikEntity;
 import com.example.pisioconf_backend.models.enums.Role;
 import com.example.pisioconf_backend.models.enums.UserStatus;
-import com.example.pisioconf_backend.models.requests.ChangeRoleRequest;
-import com.example.pisioconf_backend.models.requests.ChangeStatusRequest;
-import com.example.pisioconf_backend.models.requests.SignUpRequest;
-import com.example.pisioconf_backend.models.requests.UserUpdateRequest;
+import com.example.pisioconf_backend.models.requests.*;
 import com.example.pisioconf_backend.repositories.KorisnikRepository;
 import com.example.pisioconf_backend.services.EmailService;
 import com.example.pisioconf_backend.services.KorisnikService;
+import com.example.pisioconf_backend.util.LoggingUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -162,6 +162,29 @@ public class KorisnikImplService implements KorisnikService {
         manager.refresh(entity);
         return modelMapper.map(entity, Korisnik.class);
 
+    }
+
+    @Override
+    public void updatePassword(Integer id, ChangePasswordRequest request) throws Exception {
+        KorisnikEntity entity = korisnikRepository.findById(id).get();
+        try {
+            Authentication authenticate = authenticationManager
+                    .authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    entity.getUsername(), request.getTrenutnaLozinka()
+                            )
+                    );
+
+            if (request.getPassword() != null && request.getPassword().length() > 0 && !request.getPassword().equals(entity.getPassword())) {
+                entity.setPassword(passwordEncoder.encode(request.getPassword()));
+            }
+            entity.setId(id);
+           // entity.setResetToken(null);
+            korisnikRepository.save(entity);
+        } catch (Exception ex) {
+            LoggingUtil.logException(ex, getClass());
+            throw new Exception("Trenutna lozinka koja je unesena nije ispravna!");
+        }
     }
 
     @Override
