@@ -34,4 +34,15 @@ public interface KonferencijaRepository extends JpaRepository<KonferencijaEntity
 
     @Query("SELECT k FROM KonferencijaEntity k WHERE k.naziv LIKE :namePrefix%")
     List<KonferencijaEntity> findAllKonferencijeByNaziv(@Param("namePrefix") String namePrefix) throws NotFoundException;
+
+
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.startTime >= :datum")
+    List<KonferencijaEntity> findAllKonferencijeByStatusAndDatum(Boolean status, LocalDateTime datum);
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.naziv LIKE :namePrefix%")
+    List<KonferencijaEntity> findAllKonferencijeByStatusAndNaziv(Boolean status, @Param("namePrefix") String namePrefix) throws NotFoundException;
+
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.startTime >= :datum AND k.naziv LIKE :namePrefix%")
+    List<KonferencijaEntity> findAllKonferencijeByDatumAndNaziv(LocalDateTime datum,@Param("namePrefix") String namePrefix) throws NotFoundException;
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.startTime >= :datum AND k.naziv LIKE :namePrefix%")
+    List<KonferencijaEntity> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status, LocalDateTime datum, @Param("namePrefix") String namePrefix) throws NotFoundException;
 }

@@ -138,6 +138,30 @@ public class KonferencijaImplService implements KonferencijaService {
         return konferencijaRepository.findAllKonferencijeByNaziv(nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Konferencija> findAllKonferencijeByStatusAndDatum(Boolean status, LocalDateTime datum) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByStatusAndDatum(status,datum).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Konferencija> findAllKonferencijeByStatusAndNaziv(Boolean status, String nazivPattern) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByStatusAndNaziv(status,nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Konferencija> findAllKonferencijeByDatumAndNaziv(LocalDateTime datum, String nazivPattern) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByDatumAndNaziv(datum,nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status, LocalDateTime datum, String nazivPattern) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByStatusAndDatumAndNaziv(status,datum,nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+
+    }
+
 
     @Scheduled(cron = "0 * * * * *")
     public void checkStatusKonferencije()

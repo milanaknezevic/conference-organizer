@@ -35,15 +35,32 @@ public class KonferencijaController {
     {
         return konferencijaService.findAllKonferencijeByNaziv(naziv);
     }
-
-
-
-
-
     @GetMapping("/status")
     public List<Konferencija> findKonferencijeByStatus(@RequestParam("status") Boolean status)
     {
         return konferencijaService.findAllKonferencijeByStatus(status);
+    }
+    @GetMapping("/status-datum")
+    public List<Konferencija> findAllKonferencijeByStatusAndDatum(@RequestParam("status") Boolean status,@RequestParam("datum") LocalDateTime datum)
+    {
+        return konferencijaService.findAllKonferencijeByStatusAndDatum(status,datum);
+    }
+    @GetMapping("/status-naziv")
+    public List<Konferencija> findAllKonferencijeByStatusAndNaziv(@RequestParam("status") Boolean status, @RequestParam("naziv") String naziv)
+    {
+        return konferencijaService.findAllKonferencijeByStatusAndNaziv(status,naziv);
+    }
+
+    @GetMapping("/datum-naziv")
+    public List<Konferencija> findAllKonferencijeByDatumAndNaziv(@RequestParam("datum") LocalDateTime datum, @RequestParam("naziv") String naziv)
+    {
+        return konferencijaService.findAllKonferencijeByDatumAndNaziv(datum,naziv);
+    }
+
+    @GetMapping("/status-datum-naziv")
+    public List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(@RequestParam("status") Boolean status,@RequestParam("datum") LocalDateTime datum, @RequestParam("naziv") String naziv)
+    {
+        return konferencijaService.findAllKonferencijeByStatusAndDatumAndNaziv(status,datum,naziv);
     }
 
 
