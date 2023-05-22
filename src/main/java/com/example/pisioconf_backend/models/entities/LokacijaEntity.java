@@ -1,9 +1,11 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
 @Data
 @Entity
 @Table(name = "lokacija")
@@ -15,16 +17,13 @@ public class LokacijaEntity {
     @Basic
     @Column(name = "adresa")
     private String adresa;
-    @Basic
-    @Column(name = "status")
-    private Boolean status;
-    @OneToMany(mappedBy = "lokacijaByLokacijaId")
-    private List<DogadjajEntity> dogadjaji;
-    @OneToMany(mappedBy = "lokacijaByLokacijaId")
-    private List<KonferencijaEntity> konferencije;
-    @OneToMany(mappedBy = "lokacijaByLokacijaId")
-    private List<ResursEntity> resursi;
-    @OneToMany(mappedBy = "lokacijaByLokacijaId")
-    private List<SobaEntity> sobe;
+    @OneToMany(mappedBy = "lokacija")
+    private List<DogadjajEntity> dogadjajs;
+    @OneToMany(mappedBy = "lokacija")
+    private List<KonferencijaEntity> konferencijas;
+    @OneToMany(mappedBy = "lokacija")
+    private List<ResursEntity> resurs;
+    @OneToMany(mappedBy = "lokacija")
+    private List<SobaEntity> sobas;
 
 }

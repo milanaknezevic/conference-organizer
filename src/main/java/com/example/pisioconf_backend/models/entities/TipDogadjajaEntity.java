@@ -1,9 +1,11 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
 @Data
 @Entity
 @Table(name = "tip_dogadjaja")
@@ -15,7 +17,7 @@ public class TipDogadjajaEntity {
     @Basic
     @Column(name = "naziv")
     private String naziv;
-    @OneToMany(mappedBy = "tipDogadjajaByTipDogadjajaId")
-    private List<DogadjajEntity> dogadjaji;
+    @OneToMany(mappedBy = "tipDogadjaja")
+    private List<DogadjajEntity> dogadjajs;
 
 }

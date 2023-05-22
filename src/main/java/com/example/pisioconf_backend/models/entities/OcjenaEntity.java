@@ -1,8 +1,10 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
+
 @Data
 @Entity
 @Table(name = "ocjena")
@@ -15,13 +17,13 @@ public class OcjenaEntity {
     @Basic
     @Column(name = "komentar")
     private String komentar;
-    @MapsId("KORISNIK_id")
+    @MapsId("korisnikId")
     @ManyToOne
     @JoinColumn(name = "KORISNIK_id", referencedColumnName = "id", nullable = false)
-    private KorisnikEntity korisnikByKorisnikId;
-    @MapsId("KONFERENCIJA_id")
+    private KorisnikEntity korisnik;
+    @MapsId("konferencijaId")
     @ManyToOne
     @JoinColumn(name = "KONFERENCIJA_id", referencedColumnName = "id", nullable = false)
-    private KonferencijaEntity konferencijaByKonferencijaId;
+    private KonferencijaEntity konferencija;
 
 }

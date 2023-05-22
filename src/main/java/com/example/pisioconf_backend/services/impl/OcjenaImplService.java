@@ -66,6 +66,6 @@ public class OcjenaImplService implements OcjenaService {
 
     @Override
     public List<Ocjena> findAllOcjeneByKonferencijaId(Integer idKonferencije) {
-        return ocjenaRepository.findAllByKonferencijaByKonferencijaId(idKonferencije).stream().map(l -> modelMapper.map(l, Ocjena.class)).collect(Collectors.toList());
+        return ocjenaRepository.findAllByKonferencija_Id(idKonferencije).stream().map(l -> modelMapper.map(l, Ocjena.class)).collect(Collectors.toList());
     }
 }

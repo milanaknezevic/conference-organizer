@@ -60,14 +60,13 @@ public class KonferencijaImplService implements KonferencijaService {
 
     @Override
     public Konferencija insert(KonferencijaRequest konferencijaRequest) throws NotFoundException {
-        KorisnikEntity moderatorEntity = korisnikRepository.findById(konferencijaRequest.getModeratorId()).get();
-        KorisnikEntity organizatorEnttity = korisnikRepository.findById(konferencijaRequest.getOrganizatorId()).get();
+       KorisnikEntity organizatorEnttity = korisnikRepository.findById(konferencijaRequest.getOrganizatorId()).get();
         LokacijaEntity lokacijaEntity = lokacijaRepository.findById(konferencijaRequest.getLokacijaId()).get();
 
         KonferencijaEntity konferencijaEntity = modelMapper.map(konferencijaRequest, KonferencijaEntity.class);
-        konferencijaEntity.setKorisnikByModeratorId(moderatorEntity);
-        konferencijaEntity.setKorisnikByOrganizatorId(organizatorEnttity);
-        konferencijaEntity.setLokacijaByLokacijaId(lokacijaEntity);
+
+        konferencijaEntity.setKorisnik(organizatorEnttity);
+        konferencijaEntity.setLokacija(lokacijaEntity);
 
         konferencijaEntity.setId(null);
 

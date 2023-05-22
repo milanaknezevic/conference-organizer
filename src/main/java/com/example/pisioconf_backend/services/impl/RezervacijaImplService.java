@@ -46,8 +46,8 @@ public class RezervacijaImplService implements RezervacijaService {
         DogadjajEntity dogadjaj = dogadjajRepository.findById(rezervacijaRequest.getDogadjajId()).orElse(null);
 
         if (resurs != null && dogadjaj != null) {
-            rezervacijaEntity.setResursByResursId(resurs);
-            rezervacijaEntity.setDogadjajByDogadjajId(dogadjaj);
+            rezervacijaEntity.setResurs(resurs);
+            rezervacijaEntity.setDogadjaj(dogadjaj);
         }
         if (rezervacijaRequest.getKolicina() > resurs.getKolicina()) {
             throw new NotFoundException();//nije not found vec trebam napraviti novi exc

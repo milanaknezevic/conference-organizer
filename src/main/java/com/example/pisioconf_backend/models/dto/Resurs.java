@@ -7,5 +7,5 @@ public class Resurs {
     private Integer id;
     private String naziv;
     private Integer kolicina;
-    private Boolean status;
+
 }

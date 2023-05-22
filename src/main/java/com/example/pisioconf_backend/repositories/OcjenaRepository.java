@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface OcjenaRepository extends JpaRepository<OcjenaEntity, OcjenaEntityPK> {
 
-    List<OcjenaEntity> findAllByKonferencijaByKonferencijaId(Integer id);
+    List<OcjenaEntity> findAllByKonferencija_Id(Integer id);
 }

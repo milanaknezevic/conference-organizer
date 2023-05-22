@@ -4,6 +4,9 @@ import com.example.pisioconf_backend.exception.ForbiddenException;
 import com.example.pisioconf_backend.models.dto.JwtUser;
 import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Korisnik;
+import com.example.pisioconf_backend.models.entities.KorisnikEntity;
+import com.example.pisioconf_backend.models.enums.Role;
+import com.example.pisioconf_backend.models.enums.UserStatus;
 import com.example.pisioconf_backend.models.requests.ChangePasswordRequest;
 import com.example.pisioconf_backend.models.requests.ChangeRoleRequest;
 import com.example.pisioconf_backend.models.requests.ChangeStatusRequest;
@@ -24,6 +27,35 @@ public class KorisnikController {
 
     public KorisnikController(KorisnikService korisnikService) {
         this.korisnikService = korisnikService;
+    }
+    @GetMapping("/bezAdmina/{id}")
+    public List<Korisnik> getAllKorisniciExceptCurrent(@PathVariable Integer id) {
+        return korisnikService.findAllExceptCurrent(id);
+    }
+
+    @GetMapping("/all")
+    List<Korisnik> findAll() {
+        return korisnikService.findAll();
+    }
+    @GetMapping("/{status}")
+    public List<Korisnik> getKorisniciByUloga(@PathVariable String status) {
+        KorisnikEntity.Status status1;
+        Role rola=Role.ADMIN;
+        switch (status) {
+            case "aktivni":
+                status1 = KorisnikEntity.Status .ACTIVE;
+                break;
+            case "zahtjevi":
+                status1 = KorisnikEntity.Status .REQUESTED;
+                break;
+            case "blokirani":
+                status1 = KorisnikEntity.Status .BLOCKED;
+                break;
+            default:
+                throw new IllegalArgumentException("Nepodržana uloga: " + status);
+        }
+
+        return korisnikService.findAllByStatus(status1,rola);
     }
 
     @GetMapping("/{id}/moderator_konferencije")

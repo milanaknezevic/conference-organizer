@@ -15,4 +15,5 @@ public class DogadjajRequest {
     private Integer tipDogadjaja;
     private Integer lokacijaId;
     private List<Integer> resursi;
+    private Integer moderator_Id;
 }

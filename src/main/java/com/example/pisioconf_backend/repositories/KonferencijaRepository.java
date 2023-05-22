@@ -14,16 +14,16 @@ import java.util.List;
 public interface KonferencijaRepository extends JpaRepository<KonferencijaEntity, Integer> {
 
 
-    @Query("SELECT k from KonferencijaEntity  k where k.lokacijaByLokacijaId.id=:idk")
+    @Query("SELECT k from KonferencijaEntity  k where k.lokacija.id =:idk")
     List<KonferencijaEntity> getAllByLokgacijaByLokacijaId_Id(Integer idk);
 
 
-    @Query("select o from OcjenaEntity  o where o.korisnikByKorisnikId.id=:id")
+    @Query("select o from OcjenaEntity  o where o.korisnik.id=:id")
     List<OcjenaEntity> getAllOcjeneByKorisnikId(Integer id);
 
     @Query("select k from KonferencijaEntity k where k.status=false")
     List<KonferencijaEntity> getAllNotFinishedKonferencije();
-    @Query("select k from KonferencijaEntity k where k.korisnikByModeratorId.id=:id")
+    @Query("select k from KonferencijaEntity k where k.korisnik.id=:id")
     List<KonferencijaEntity> findAllKonferencijeByModeratorId(Integer id);
 
     @Query("select k from KonferencijaEntity  k where k.status=: status")

@@ -13,7 +13,9 @@
     {
       "methods": ["GET"],
       "pattern": "/ocjene/*",
-      "roles": ["ORGANIZATOR"]
+      "roles": [
+        "ORGANIZATOR", "MODERATOR"
+      ]
     },
     {
       "methods": ["GET"],
@@ -53,11 +55,6 @@
       "roles": ["MODERATOR"]
     },
     {
-      "methods": ["GET"],
-      "pattern": "/ocjene/*",
-      "roles": ["MODERATOR"]
-    },
-    {
       "methods": ["PATCH"],
       "pattern": "/korisnici/*/status",
       "roles": [
@@ -79,6 +76,13 @@
       ]
     },
     {
+      "methods": ["GET"],
+      "pattern": "/korisnici/bezAdmina/*",
+      "roles": [
+        "ADMIN"
+      ]
+    },
+    {
       "methods": ["POST"],
       "pattern": "/posjetioci",
       "roles": ["POSJETILAC"]
@@ -86,7 +90,9 @@
     {
       "methods": ["GET"],
       "pattern": "/konferencije/*",
-      "roles": ["POSJETILAC"]
+      "roles": [
+        "POSJETILAC"
+      ]
     },
     {
       "methods": ["GET"],

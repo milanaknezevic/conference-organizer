@@ -64,9 +64,9 @@ public class DogadjajImplService implements DogadjajService {
         SesijaEntity sesijaEntity = sesijaRepository.findById(dogadjajRequest.getSesijaId()).get();
 
         DogadjajEntity dogadjajEntity = modelMapper.map(dogadjajRequest, DogadjajEntity.class);
-        dogadjajEntity.setSesijaBySesijaId(sesijaEntity);
-        dogadjajEntity.setTipDogadjajaByTipDogadjajaId(tipDogadjajaEntity);
-        dogadjajEntity.setLokacijaByLokacijaId(lokacijaEntity);
+        dogadjajEntity.setSesija(sesijaEntity);
+        dogadjajEntity.setTipDogadjaja(tipDogadjajaEntity);
+        dogadjajEntity.setLokacija(lokacijaEntity);
 
         dogadjajEntity.setId(null);
         dogadjajEntity = dogadjajRepository.saveAndFlush(dogadjajEntity);
@@ -103,13 +103,13 @@ public class DogadjajImplService implements DogadjajService {
         for (DogadjajEntity d : dogadjaji) {
             LocalDateTime vrijeme = LocalDateTime.ofInstant(d.getEndTime().toInstant(), ZoneId.systemDefault());
             if (vrijeme.isAfter(now)) {
-                SobaEntity soba = d.getSobaBySobaId();
-                soba.setStatus(false);
+                SobaEntity soba = d.getSoba();
+
                 List<RezervacijaEntity> rezervacije = rezervacijaRepository.getAllRezervacijeByDogadjajID(d.getId());
                 for (RezervacijaEntity r : rezervacije) {
                     //update resurs
                     int kolicina = r.getKolicina();
-                    ResursEntity resurs = r.getResursByResursId();
+                    ResursEntity resurs = r.getResurs();
                     resurs.setKolicina(resurs.getKolicina() + kolicina);
                     resurs = resursRepository.saveAndFlush(resurs);
 
@@ -124,19 +124,5 @@ public class DogadjajImplService implements DogadjajService {
         }
     }
 
-    @Scheduled(cron = "0 */30 * ? * *")
-    public void checkLokacije() {
-        LocalDateTime now = LocalDateTime.now();
-        List<LokacijaEntity> lokacije = lokacijaRepository.findAll();
-        for (LokacijaEntity l : lokacije) {
-            List<SobaEntity> sobe = l.getSobe();
-            SobaEntity s = sobe.stream().filter(e -> !e.getStatus()).findFirst().orElse(null);
-            if (s == null) {
-                l.setStatus(true);
-            } else {
-                l.setStatus(false);
-            }
-            l = lokacijaRepository.saveAndFlush(l);
-        }
-    }
+
 }

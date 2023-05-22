@@ -1,10 +1,12 @@
 package com.example.pisioconf_backend.models.entities;
 
 import com.example.pisioconf_backend.models.enums.Role;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
 @Data
 @Entity
 @Table(name = "korisnik")
@@ -33,15 +35,14 @@ public class KorisnikEntity {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     private Status status;
-    @OneToMany(mappedBy = "korisnikByModeratorId")
-    private List<KonferencijaEntity> konferencijeModeratora;
-    @OneToMany(mappedBy = "korisnikByOrganizatorId")
-    private List<KonferencijaEntity> konferencijeOrganizatora;
-    @OneToMany(mappedBy = "korisnikByKorisnikId")
-    private List<OcjenaEntity> ocjene;
-    @OneToMany(mappedBy = "korisnikByKorisnikId")
-    private List<PosjetilacEntity> posjetioci;
-
+    @OneToMany(mappedBy = "korisnik")
+    private List<DogadjajEntity> dogadjajs;
+    @OneToMany(mappedBy = "korisnik")
+    private List<KonferencijaEntity> konferencijas;
+    @OneToMany(mappedBy = "korisnik")
+    private List<OcjenaEntity> ocjenas;
+    @OneToMany(mappedBy = "korisnik")
+    private List<PosjetilacEntity> posjetilacs;
     public enum Status {
         REQUESTED, ACTIVE, BLOCKED
     }

@@ -1,10 +1,11 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -28,19 +29,22 @@ public class DogadjajEntity {
     private String url;
     @ManyToOne
     @JoinColumn(name = "SESIJA_id", referencedColumnName = "id", nullable = false)
-    private SesijaEntity sesijaBySesijaId;
+    private SesijaEntity sesija;
     @ManyToOne
     @JoinColumn(name = "TIP_DOGADJAJA_id", referencedColumnName = "id", nullable = false)
-    private TipDogadjajaEntity tipDogadjajaByTipDogadjajaId;
+    private TipDogadjajaEntity tipDogadjaja;
     @ManyToOne
     @JoinColumn(name = "LOKACIJA_id", referencedColumnName = "id", nullable = false)
-    private LokacijaEntity lokacijaByLokacijaId;
-    @OneToMany(mappedBy = "dogadjajByDogadjajId")
-    private List<PosjetilacEntity> posjetioci;
-    @OneToMany(mappedBy = "dogadjajByDogadjajId")
-    private List<RezervacijaEntity> rezervacije;
-    @OneToOne
-    @JoinColumn(name = "SOBA_id", referencedColumnName = "id", nullable = false)
-    private SobaEntity sobaBySobaId;
+    private LokacijaEntity lokacija;
+    @ManyToOne
+    @JoinColumn(name = "soba_id", referencedColumnName = "id", nullable = false)
+    private SobaEntity soba;
+    @ManyToOne
+    @JoinColumn(name = "moderator_id", referencedColumnName = "id", nullable = false)
+    private KorisnikEntity korisnik;
+    @OneToMany(mappedBy = "dogadjaj")
+    private List<PosjetilacEntity> posjetilacs;
+    @OneToMany(mappedBy = "dogadjaj")
+    private List<RezervacijaEntity> rezervacijas;
 
 }

@@ -11,4 +11,5 @@ public class Dogadjaj {
     private Date endTime;
     private String naziv;
     private String url;
+    private Korisnik korisnik;
 }

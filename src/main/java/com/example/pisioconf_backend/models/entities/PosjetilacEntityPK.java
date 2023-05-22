@@ -1,17 +1,17 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 @Embeddable
 public class PosjetilacEntityPK implements Serializable {
     @Column(name = "KORISNIK_id")
-    private Integer korisnikId;
+   private Integer korisnikId;
     @Column(name = "DOGADJAJ_id")
-    private Integer dogadjajId;
+   private Integer dogadjajId;
 
 }

@@ -54,7 +54,7 @@ public class SesijaImplService implements SesijaService {
         SesijaEntity sesijaEntity = modelMapper.map(sesijaRequest, SesijaEntity.class);
 
 
-        sesijaEntity.setKonferencijaByKonferencijaId(konferencijaEntity);
+        sesijaEntity.setKonferencija(konferencijaEntity);
 
         sesijaEntity.setId(null);
 

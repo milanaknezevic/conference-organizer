@@ -1,10 +1,11 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -27,17 +28,14 @@ public class KonferencijaEntity {
     @Column(name = "status")
     private Boolean status;
     @ManyToOne
-    @JoinColumn(name = "moderator_id", referencedColumnName = "id", nullable = false)
-    private KorisnikEntity korisnikByModeratorId;
-    @ManyToOne
     @JoinColumn(name = "organizator_id", referencedColumnName = "id", nullable = false)
-    private KorisnikEntity korisnikByOrganizatorId;
+    private KorisnikEntity korisnik;
     @ManyToOne
     @JoinColumn(name = "LOKACIJA_id", referencedColumnName = "id")
-    private LokacijaEntity lokacijaByLokacijaId;
-    @OneToMany(mappedBy = "konferencijaByKonferencijaId")
-    private List<OcjenaEntity> ocjene;
-    @OneToMany(mappedBy = "konferencijaByKonferencijaId", cascade = CascadeType.ALL)
-    private List<SesijaEntity> sesije;
+    private LokacijaEntity lokacija;
+    @OneToMany(mappedBy = "konferencija")
+    private List<OcjenaEntity> ocjenas;
+    @OneToMany(mappedBy = "konferencija")
+    private List<SesijaEntity> sesijas;
 
 }

@@ -13,6 +13,5 @@ public class KonferencijaRequest {
     private Boolean status;
     private List<SesijaRequest> sesije;
     private Integer lokacijaId;
-    private Integer moderatorId;
     private Integer organizatorId;
 }

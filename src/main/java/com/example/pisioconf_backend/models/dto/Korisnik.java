@@ -12,6 +12,5 @@ public class Korisnik {
     private Role rola;
     private String email;
     private String username;
-    private String password;
     private KorisnikEntity.Status status;
 }

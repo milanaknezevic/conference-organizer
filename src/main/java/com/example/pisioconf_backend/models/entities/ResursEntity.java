@@ -1,13 +1,15 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
 @Data
 @Entity
 @Table(name = "resurs")
-public class ResursEntity{
+public class ResursEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -18,13 +20,10 @@ public class ResursEntity{
     @Basic
     @Column(name = "kolicina")
     private Integer kolicina;
-    @Basic
-    @Column(name = "status")
-    private Boolean status;
     @ManyToOne
     @JoinColumn(name = "LOKACIJA_id", referencedColumnName = "id", nullable = false)
-    private LokacijaEntity lokacijaByLokacijaId;
-    @OneToMany(mappedBy = "resursByResursId")
-    private List<RezervacijaEntity> rezervacije;
+    private LokacijaEntity lokacija;
+    @OneToMany(mappedBy = "resurs")
+    private List<RezervacijaEntity> rezervacijas;
 
 }

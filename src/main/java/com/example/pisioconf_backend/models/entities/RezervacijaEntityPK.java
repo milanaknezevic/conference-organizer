@@ -1,10 +1,11 @@
 package com.example.pisioconf_backend.models.entities;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
+
 @Data
 @Embeddable
 public class RezervacijaEntityPK implements Serializable {
