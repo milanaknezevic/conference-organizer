@@ -10,8 +10,6 @@ public class UserUpdateRequest {
     @NotBlank
     private String korisnickoIme;
     @NotBlank
-    private String lozinka;
-    @NotBlank
     private String ime;
     @NotBlank
     @Email

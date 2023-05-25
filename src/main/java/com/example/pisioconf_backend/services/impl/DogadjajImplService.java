@@ -25,21 +25,18 @@ public class DogadjajImplService implements DogadjajService {
     private final LokacijaRepository lokacijaRepository;
     private final SobaRepository sobaRepository;
     private final TipDogadjajaRepository tipDogadjajaRepository;
-    private final SesijaRepository sesijaRepository;
     private final ResursRepository resursRepository;
+    private final KonferencijaRepository konferencijaRepository;
 
-    public DogadjajImplService(ModelMapper modelMapper, DogadjajRepository dogadjajRepository, RezervacijaRepository rezervacijaRepository,
-                               LokacijaRepository lokacijaRepository, SobaRepository sobaRepository, TipDogadjajaRepository tipDogadjajaRepository,
-                               SesijaRepository sesijaRepository,
-                               ResursRepository resursRepository) {
+    public DogadjajImplService(ModelMapper modelMapper, DogadjajRepository dogadjajRepository, RezervacijaRepository rezervacijaRepository, LokacijaRepository lokacijaRepository, SobaRepository sobaRepository, TipDogadjajaRepository tipDogadjajaRepository, ResursRepository resursRepository, KonferencijaRepository konferencijaRepository) {
         this.modelMapper = modelMapper;
         this.dogadjajRepository = dogadjajRepository;
         this.rezervacijaRepository = rezervacijaRepository;
         this.lokacijaRepository = lokacijaRepository;
         this.sobaRepository = sobaRepository;
         this.tipDogadjajaRepository = tipDogadjajaRepository;
-        this.sesijaRepository = sesijaRepository;
         this.resursRepository = resursRepository;
+        this.konferencijaRepository = konferencijaRepository;
     }
 
     @Override
@@ -61,10 +58,10 @@ public class DogadjajImplService implements DogadjajService {
     public Dogadjaj insert(DogadjajRequest dogadjajRequest) throws NotFoundException {
         LokacijaEntity lokacijaEntity = lokacijaRepository.findById(dogadjajRequest.getLokacijaId()).get();
         TipDogadjajaEntity tipDogadjajaEntity = tipDogadjajaRepository.findById(dogadjajRequest.getTipDogadjaja()).get();
-        SesijaEntity sesijaEntity = sesijaRepository.findById(dogadjajRequest.getSesijaId()).get();
+        KonferencijaEntity konferencijaEntity = konferencijaRepository.findById(dogadjajRequest.getKonferencijaId()).get();
 
         DogadjajEntity dogadjajEntity = modelMapper.map(dogadjajRequest, DogadjajEntity.class);
-        dogadjajEntity.setSesija(sesijaEntity);
+        dogadjajEntity.setKonferencija(konferencijaEntity);
         dogadjajEntity.setTipDogadjaja(tipDogadjajaEntity);
         dogadjajEntity.setLokacija(lokacijaEntity);
 

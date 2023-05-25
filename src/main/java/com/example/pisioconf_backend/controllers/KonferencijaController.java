@@ -69,10 +69,10 @@ public class KonferencijaController {
     List<Konferencija> findAll() {
         return konferencijaService.findAll();
     }
-    @GetMapping("/{idModeratora}/moderator-conf")
+   /* @GetMapping("/{idModeratora}/moderator-conf")
     List<Konferencija> findAllByModeratorId(@PathVariable Integer idModeratora) {
         return konferencijaService.findAllByModeratorId(idModeratora);
-    }
+    }*/
 
 
 
@@ -80,8 +80,14 @@ public class KonferencijaController {
     public Konferencija findById(@PathVariable Integer id) throws NotFoundException {
         return konferencijaService.findById(id);
     }
-
-
+    @GetMapping("/{idModeratora}/moderator")
+    public List<Konferencija> findByModeratorId(@PathVariable Integer idModeratora) throws NotFoundException {
+        return konferencijaService.findAllKonferencijeByModerator(idModeratora);
+    }
+    @GetMapping("/{idPosjetioca}/posjetilac")
+    public List<Konferencija> findByPosjetilacId(@PathVariable Integer idPosjetioca) throws NotFoundException {
+       return konferencijaService.findAllKonferencijeByPosjetilac(idPosjetioca);
+    }
 
 
     @GetMapping("/nezavrsene")

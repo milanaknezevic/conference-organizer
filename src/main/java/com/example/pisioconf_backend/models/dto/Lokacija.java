@@ -9,6 +9,6 @@ public class Lokacija {
     private Integer id;
     private String adresa;
 
-    private List<Resurs> resursi;
-    private List<Soba> sobe;
+    private List<Resurs> resurs;
+    private List<Soba> sobas;
 }

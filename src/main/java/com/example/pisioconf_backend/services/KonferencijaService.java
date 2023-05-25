@@ -41,4 +41,7 @@ public interface KonferencijaService //extends CrudService<Integer> {
     List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status,LocalDateTime datum,String nazivPattern) throws NotFoundException;
 
 
+    List<Konferencija> findAllKonferencijeByModerator(Integer idModeratora) throws NotFoundException;
+    List<Konferencija> findAllKonferencijeByPosjetilac(Integer idPosjetioca) throws NotFoundException;
+
 }

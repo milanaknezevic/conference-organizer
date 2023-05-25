@@ -1,5 +1,6 @@
 package com.example.pisioconf_backend.repositories;
 
+import com.example.pisioconf_backend.models.entities.DogadjajEntity;
 import com.example.pisioconf_backend.models.entities.KonferencijaEntity;
 import com.example.pisioconf_backend.models.entities.KorisnikEntity;
 import com.example.pisioconf_backend.models.enums.Role;
@@ -27,4 +28,6 @@ public interface KorisnikRepository extends JpaRepository<KorisnikEntity, Intege
     List<KorisnikEntity> findAllExceptCurrent(Integer currentUserId);
 
     Boolean existsByUsernameAndIdNot(String username,Integer id);
+
+
 }

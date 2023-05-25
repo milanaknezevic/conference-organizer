@@ -12,7 +12,9 @@ public class Konferencija {
     private Date endTime;
     private String naziv;
     private Boolean status;
-    private List<Sesija> sesije;
+    private String url;
+    private List<Dogadjaj> dogadjajs;
     private Lokacija lokacija;
+
 
 }

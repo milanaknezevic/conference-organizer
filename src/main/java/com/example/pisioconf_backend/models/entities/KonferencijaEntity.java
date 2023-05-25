@@ -1,5 +1,6 @@
 package com.example.pisioconf_backend.models.entities;
 
+import com.example.pisioconf_backend.models.dto.Dogadjaj;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +28,9 @@ public class KonferencijaEntity {
     @Basic
     @Column(name = "status")
     private Boolean status;
+    @Basic
+    @Column(name = "url")
+    private String url;
     @ManyToOne
     @JoinColumn(name = "organizator_id", referencedColumnName = "id", nullable = false)
     private KorisnikEntity korisnik;
@@ -36,6 +40,6 @@ public class KonferencijaEntity {
     @OneToMany(mappedBy = "konferencija")
     private List<OcjenaEntity> ocjenas;
     @OneToMany(mappedBy = "konferencija")
-    private List<SesijaEntity> sesijas;
+    private List<DogadjajEntity> dogadjajs;;
 
 }

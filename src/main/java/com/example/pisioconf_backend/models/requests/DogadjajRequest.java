@@ -11,7 +11,7 @@ public class DogadjajRequest {
     private Date endTime;
     private String naziv;
     private String url;
-    private Integer sesijaId;
+    private Integer konferencijaId;
     private Integer tipDogadjaja;
     private Integer lokacijaId;
     private List<Integer> resursi;

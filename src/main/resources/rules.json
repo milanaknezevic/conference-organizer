@@ -3,48 +3,14 @@
     {
       "methods": ["GET"],
       "pattern": "/konferencije/*",
-      "roles": ["ORGANIZATOR"]
+      "roles": ["ORGANIZATOR","POSJETILAC"]
     },
-    {
-      "methods": ["POST","PATCH","DELETE"],
-      "pattern": "/konferencije/*",
-      "roles": ["ORGANIZATOR"]
-    },
+
+
+
     {
       "methods": ["GET"],
-      "pattern": "/ocjene/*",
-      "roles": [
-        "ORGANIZATOR", "MODERATOR"
-      ]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/posjetioci/*",
-      "roles": ["ORGANIZATOR"]
-    },
-    {
-      "methods": ["GET","DELETE", "POST", "PATCH"],
-      "pattern": "/rezervacije/*",
-      "roles": ["ORGANIZATOR"]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/resursi/*",
-      "roles": ["ORGANIZATOR"]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/lokacije/*",
-      "roles": ["ORGANIZATOR"]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/tipoviDOgadjaja/*",
-      "roles": ["ORGANIZATOR"]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/konferencije/*/moderator-conf",
+      "pattern": "/konferencije/*/moderator",
       "roles": [
         "MODERATOR"
       ]
@@ -54,20 +20,7 @@
       "pattern": "/ocjene",
       "roles": ["MODERATOR"]
     },
-    {
-      "methods": ["PATCH"],
-      "pattern": "/korisnici/*/status",
-      "roles": [
-        "ADMIN"
-      ]
-    },
-    {
-      "methods": ["PATCH"],
-      "pattern": "/korisnici/*/role",
-      "roles": [
-        "ADMIN"
-      ]
-    },
+
     {
       "methods": ["GET"],
       "pattern": "/korisnici/*",
@@ -76,38 +29,23 @@
       ]
     },
     {
-      "methods": ["GET"],
-      "pattern": "/korisnici/bezAdmina/*",
+      "methods": ["PATCH"],
+      "pattern": "/korisnici/*/status",
       "roles": [
         "ADMIN"
       ]
     },
+
     {
-      "methods": ["POST"],
+      "methods": ["POST","GET"],
       "pattern": "/posjetioci",
       "roles": ["POSJETILAC"]
     },
+
     {
       "methods": ["GET"],
-      "pattern": "/konferencije/*",
-      "roles": [
-        "POSJETILAC"
-      ]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/konferencije/status/*",
-      "roles": ["POSJETILAC","ORGANIZATOR","MODERATOR"]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/konferencije/datum/*",
-      "roles": ["POSJETILAC","ORGANIZATOR","MODERATOR"]
-    },
-    {
-      "methods": ["GET"],
-      "pattern": "/konferencije/naziv/*",
-      "roles": ["POSJETILAC","ORGANIZATOR","MODERATOR"]
+      "pattern": "/konferencije/*/posjetilac",
+      "roles": ["POSJETILAC"]
     }
   ]
 }

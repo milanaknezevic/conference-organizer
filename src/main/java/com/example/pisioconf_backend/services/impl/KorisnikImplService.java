@@ -170,9 +170,9 @@ public class KorisnikImplService implements KorisnikService {
         if (user.getEmail() != null && user.getEmail().length() > 0 && !user.getEmail().equals(entity.getEmail())) {
             entity.setEmail(user.getEmail());
         }
-        if (user.getLozinka() != null && user.getLozinka().length() > 0 && !user.getLozinka().equals(entity.getPassword())) {
+        /*if (user.getLozinka() != null && user.getLozinka().length() > 0 && !user.getLozinka().equals(entity.getPassword())) {
             entity.setPassword(passwordEncoder.encode(user.getLozinka()));
-        }
+        }*/
         entity.setId(id);
         entity = korisnikRepository.saveAndFlush(entity);
         manager.refresh(entity);

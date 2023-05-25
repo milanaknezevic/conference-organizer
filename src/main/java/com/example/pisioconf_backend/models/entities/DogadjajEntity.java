@@ -28,8 +28,8 @@ public class DogadjajEntity {
     @Column(name = "url")
     private String url;
     @ManyToOne
-    @JoinColumn(name = "SESIJA_id", referencedColumnName = "id", nullable = false)
-    private SesijaEntity sesija;
+    @JoinColumn(name = "KONFERENCIJA_id", referencedColumnName = "id", nullable = false)
+    private KonferencijaEntity konferencija;
     @ManyToOne
     @JoinColumn(name = "TIP_DOGADJAJA_id", referencedColumnName = "id", nullable = false)
     private TipDogadjajaEntity tipDogadjaja;
