@@ -2,7 +2,8 @@ package com.example.pisioconf_backend.models.entities;
 
 import com.example.pisioconf_backend.models.dto.Dogadjaj;
 import lombok.*;
-
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -38,8 +39,9 @@ public class KonferencijaEntity {
     @JoinColumn(name = "LOKACIJA_id", referencedColumnName = "id")
     private LokacijaEntity lokacija;
     @OneToMany(mappedBy = "konferencija")
+    @Cascade(CascadeType.DELETE)
     private List<OcjenaEntity> ocjenas;
     @OneToMany(mappedBy = "konferencija")
-    private List<DogadjajEntity> dogadjajs;;
-
+    @Cascade(CascadeType.DELETE)
+    private List<DogadjajEntity> dogadjajs;
 }

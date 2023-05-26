@@ -1,7 +1,7 @@
 {
   "rules": [
     {
-      "methods": ["GET"],
+      "methods": ["GET","DELETE"],
       "pattern": "/konferencije/*",
       "roles": ["ORGANIZATOR","POSJETILAC"]
     },

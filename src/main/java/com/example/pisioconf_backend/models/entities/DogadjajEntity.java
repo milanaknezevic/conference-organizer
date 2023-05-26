@@ -1,6 +1,8 @@
 package com.example.pisioconf_backend.models.entities;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -43,8 +45,10 @@ public class DogadjajEntity {
     @JoinColumn(name = "moderator_id", referencedColumnName = "id", nullable = false)
     private KorisnikEntity korisnik;
     @OneToMany(mappedBy = "dogadjaj")
+    @Cascade(CascadeType.DELETE)
     private List<PosjetilacEntity> posjetilacs;
     @OneToMany(mappedBy = "dogadjaj")
+    @Cascade(CascadeType.DELETE)
     private List<RezervacijaEntity> rezervacijas;
 
 }
