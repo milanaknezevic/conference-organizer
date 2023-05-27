@@ -14,5 +14,8 @@ public class Dogadjaj {
     private String url;
     private Korisnik korisnik;
     private List<Posjetilac> posjetilacs;
+    private Lokacija lokacija;
+    private Soba soba;
+    private List<Rezervacija> rezervacijas;
 
 }
