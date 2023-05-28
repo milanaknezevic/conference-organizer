@@ -62,6 +62,13 @@ public class KorisnikController {
     public List<Konferencija> getKonferencijeZaModeratora(@PathVariable Integer id) {
         return korisnikService.getKonferencijeZaModeratora(id);
     }
+
+    @GetMapping("/moderatori")
+    public List<Korisnik> getAllModeratori() {
+        return korisnikService.findAllByRola(Role.MODERATOR, KorisnikEntity.Status.ACTIVE);
+    }
+
+
     @GetMapping("/{id}organizator_konferencije")
     public List<Konferencija> getKonferencijeZaOrganizatora(@PathVariable Integer id)
     {

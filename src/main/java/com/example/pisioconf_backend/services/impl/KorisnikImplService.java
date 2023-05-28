@@ -98,6 +98,12 @@ public class KorisnikImplService implements KorisnikService {
     }
 
     @Override
+    public List<Korisnik> findAllByRola(Role rola,KorisnikEntity.Status status) {
+        return korisnikRepository.findAllByRolaAndStatus(rola,status).stream().map(l -> modelMapper.map(l, Korisnik.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
     public List<Konferencija> getKonferencijeZaModeratora(Integer id) {
         return korisnikRepository.getAllByKorisnikByModeratorId(id).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
     }

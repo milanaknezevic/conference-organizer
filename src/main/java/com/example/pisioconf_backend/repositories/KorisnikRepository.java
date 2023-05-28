@@ -29,5 +29,7 @@ public interface KorisnikRepository extends JpaRepository<KorisnikEntity, Intege
 
     Boolean existsByUsernameAndIdNot(String username,Integer id);
 
+    List<KorisnikEntity> findAllByRolaAndStatus(Role role,KorisnikEntity.Status status);
+
 
 }

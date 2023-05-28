@@ -6,7 +6,21 @@
       "roles": ["ORGANIZATOR","POSJETILAC"]
     },
 
-
+    {
+      "methods": ["GET"],
+      "pattern": "/korisnici/moderatori",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/lokacije",
+      "roles": ["ORGANIZATOR"]
+    },
+    {
+      "methods": ["GET"],
+      "pattern": "/sobe/*",
+      "roles": ["ORGANIZATOR"]
+    },
 
     {
       "methods": ["GET"],

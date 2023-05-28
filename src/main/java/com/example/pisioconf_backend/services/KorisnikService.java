@@ -37,4 +37,5 @@ public interface KorisnikService {
     List<Korisnik> findAllByStatus(KorisnikEntity.Status  status,Role role);
 
     List<Korisnik> findAllExceptCurrent(Integer id);
+    List<Korisnik> findAllByRola(Role rola,KorisnikEntity.Status status);
 }
