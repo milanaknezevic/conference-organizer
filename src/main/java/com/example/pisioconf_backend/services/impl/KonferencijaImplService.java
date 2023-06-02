@@ -63,12 +63,17 @@ public class KonferencijaImplService implements KonferencijaService {
     @Override
     public Konferencija insert(KonferencijaRequest konferencijaRequest) throws NotFoundException {
         KorisnikEntity organizatorEnttity = korisnikRepository.findById(konferencijaRequest.getOrganizatorId()).get();
-        LokacijaEntity lokacijaEntity = lokacijaRepository.findById(konferencijaRequest.getLokacijaId()).get();
+
+
 
         KonferencijaEntity konferencijaEntity = modelMapper.map(konferencijaRequest, KonferencijaEntity.class);
-
+        if(konferencijaRequest.getLokacijaId()!=null)
+        {
+            LokacijaEntity lokacijaEntity = lokacijaRepository.findById(konferencijaRequest.getLokacijaId()).get();
+            konferencijaEntity.setLokacija(lokacijaEntity);
+        }
         konferencijaEntity.setKorisnik(organizatorEnttity);
-        konferencijaEntity.setLokacija(lokacijaEntity);
+
 
         konferencijaEntity.setId(null);
 
@@ -85,9 +90,9 @@ public class KonferencijaImplService implements KonferencijaService {
         if (konferencijaRequest.getEndTime() != null) {
             konferencijaEntity.setEndTime(konferencijaRequest.getEndTime());
         }
-        if (konferencijaRequest.getStatus() != null) {
-            konferencijaEntity.setStatus(konferencijaRequest.getStatus());
-        }
+//        if (konferencijaRequest.getStatus() != null) {
+//            konferencijaEntity.setStatus(konferencijaRequest.getStatus());
+//        }
         if (konferencijaRequest.getNaziv() != null) {
             konferencijaEntity.setNaziv(konferencijaRequest.getNaziv());
         }
@@ -185,10 +190,10 @@ public class KonferencijaImplService implements KonferencijaService {
 
         List<Konferencija> konferencijaEntities = konferencijaRepository.findAll().stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
         List<Konferencija> noveKonferencije = new ArrayList<>();
-        List<Dogadjaj> noviDogadjaji=new ArrayList<>();
+      //  List<Dogadjaj> noviDogadjaji=new ArrayList<>();
 
         for (Konferencija k : konferencijaEntities) {
-
+            List<Dogadjaj> noviDogadjaji=new ArrayList<>();
             for (Dogadjaj d:k.getDogadjajs())
             {
                 Posjetilac p=d.getPosjetilacs().stream().filter(e->e.getKorisnik().getId()==idPosjetioca).findFirst().orElse(null);
@@ -200,6 +205,7 @@ public class KonferencijaImplService implements KonferencijaService {
             if (noviDogadjaji.size() > 0) {
                 k.setDogadjajs(noviDogadjaji);
                 noveKonferencije.add(k);
+                //noviDogadjaji.clear();
             }
         }
         return noveKonferencije;

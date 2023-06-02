@@ -1,5 +1,6 @@
 package com.example.pisioconf_backend.models.requests;
 
+import com.example.pisioconf_backend.models.entities.RezervacijaEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -14,6 +15,8 @@ public class DogadjajRequest {
     private Integer konferencijaId;
     private Integer tipDogadjaja;
     private Integer lokacijaId;
-    private List<Integer> resursi;
+    private Integer sobaId;
+   // private List<Integer> resursi;
     private Integer moderator_Id;
+    //private List<RezervacijaRequest> rezervacijas;
 }

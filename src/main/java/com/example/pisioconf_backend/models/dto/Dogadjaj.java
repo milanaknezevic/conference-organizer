@@ -1,5 +1,6 @@
 package com.example.pisioconf_backend.models.dto;
 
+import com.example.pisioconf_backend.models.entities.TipDogadjajaEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,5 +18,6 @@ public class Dogadjaj {
     private Lokacija lokacija;
     private Soba soba;
     private List<Rezervacija> rezervacijas;
+    private TipDogadjaja tipDogadjaja;
 
 }

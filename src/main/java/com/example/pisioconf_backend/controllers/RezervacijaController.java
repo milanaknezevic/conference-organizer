@@ -41,9 +41,8 @@ public class RezervacijaController {
     }
 
     @GetMapping("/{dogadjajId}")
-    public List<RezervacijaEntity> findByDogadjajId(@PathVariable Integer dogadjajId) throws NotFoundException
-    {
-        return  rezervacijaService.findAllByDogadjajId(dogadjajId);
+    public List<RezervacijaEntity> findByDogadjajId(@PathVariable Integer dogadjajId) throws NotFoundException {
+        return rezervacijaService.findAllByDogadjajId(dogadjajId);
     }
 
     @PatchMapping("/{resursId}/{dogadjajId}")
@@ -56,6 +55,27 @@ public class RezervacijaController {
         return rezervacijaService.update(id, rezervacijaRequest);
 
     }
+
+
+    @PatchMapping("/rezervacija_update")
+    public void updateRez(@RequestBody List<RezervacijaRequest> rezervacijaRequestList) throws NotFoundException {
+        for (RezervacijaRequest r : rezervacijaRequestList) {
+            RezervacijaEntityPK id = new RezervacijaEntityPK();
+            id.setResursId(r.getResursId());
+            id.setDogadjajId(r.getDogadjajId());
+            rezervacijaService.updateRezervacija(id, r.getKolicina());
+        }
+    }
+    @PatchMapping("/update")
+    public void updateRezervacije(@RequestBody RezervacijaRequest rezervacijaRequest) throws NotFoundException {
+       RezervacijaEntityPK id = new RezervacijaEntityPK();
+            id.setResursId(rezervacijaRequest.getResursId());
+            id.setDogadjajId(rezervacijaRequest.getDogadjajId());
+            rezervacijaService.updateRezervacija(id, rezervacijaRequest.getKolicina());
+
+    }
+
+
 
     @DeleteMapping("/{resursId}/{dogadjajId}")
     public void delete(@PathVariable Integer resursId, @PathVariable Integer dogadjajId) {

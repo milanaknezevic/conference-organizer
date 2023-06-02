@@ -25,6 +25,7 @@ public interface KorisnikService {
     Korisnik insert(KorisnikEntity korisnikEntity, Class<Korisnik> korisnik) throws NotFoundException;
 
     void signUp(SignUpRequest request);
+    public void addModerator(SignUpRequest request);
 
     void changeStatus(Integer userId, ChangeStatusRequest request) throws Exception;
 

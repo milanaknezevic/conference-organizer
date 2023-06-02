@@ -8,5 +8,5 @@ import java.util.List;
 public class TipDogadjaja {
     private Integer id;
     private String naziv;
-    private List<Dogadjaj> dogadjaji;
+   // private List<Dogadjaj> dogadjajs;
 }

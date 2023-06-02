@@ -3,6 +3,7 @@ package com.example.pisioconf_backend.services.impl;
 import com.example.pisioconf_backend.exception.ConflictException;
 import com.example.pisioconf_backend.exception.ForbiddenException;
 import com.example.pisioconf_backend.exception.NotFoundException;
+import com.example.pisioconf_backend.models.dto.JwtUser;
 import com.example.pisioconf_backend.models.dto.Konferencija;
 import com.example.pisioconf_backend.models.dto.Korisnik;
 import com.example.pisioconf_backend.models.dto.LoginResponse;
@@ -128,6 +129,16 @@ public class KorisnikImplService implements KorisnikService {
         Korisnik user = insert(entity, Korisnik.class);
 
     }
+    public void addModerator(SignUpRequest request) {
+        if (korisnikRepository.existsByUsername(request.getUsername()))
+            throw new ConflictException();
+        KorisnikEntity entity = modelMapper.map(request, KorisnikEntity.class);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        entity.setStatus(KorisnikEntity.Status.ACTIVE);
+        entity.setRola(Role.MODERATOR);
+        Korisnik user = insert(entity, Korisnik.class);
+
+    }
 
     @Override
     public void changeStatus(Integer userId, ChangeStatusRequest request) throws Exception {
@@ -189,6 +200,9 @@ public class KorisnikImplService implements KorisnikService {
     @Override
     public void updatePassword(Integer id, ChangePasswordRequest request) throws Exception {
         KorisnikEntity entity = korisnikRepository.findById(id).get();
+        System.out.println("Lozinka iz entiteta: " + entity.getPassword());
+        System.out.println("getPassword: " + request.getPassword());
+        System.out.println("getTrenutnaLozinka: " + request.getTrenutnaLozinka());
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(
@@ -196,6 +210,9 @@ public class KorisnikImplService implements KorisnikService {
                                     entity.getUsername(), request.getTrenutnaLozinka()
                             )
                     );
+            JwtUser user = (JwtUser) authenticate.getPrincipal();
+
+            System.out.println("user: " + user);
 
             if (request.getPassword() != null && request.getPassword().length() > 0 && !request.getPassword().equals(entity.getPassword())) {
                 entity.setPassword(passwordEncoder.encode(request.getPassword()));

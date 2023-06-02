@@ -7,10 +7,7 @@ import com.example.pisioconf_backend.models.dto.Korisnik;
 import com.example.pisioconf_backend.models.entities.KorisnikEntity;
 import com.example.pisioconf_backend.models.enums.Role;
 import com.example.pisioconf_backend.models.enums.UserStatus;
-import com.example.pisioconf_backend.models.requests.ChangePasswordRequest;
-import com.example.pisioconf_backend.models.requests.ChangeRoleRequest;
-import com.example.pisioconf_backend.models.requests.ChangeStatusRequest;
-import com.example.pisioconf_backend.models.requests.UserUpdateRequest;
+import com.example.pisioconf_backend.models.requests.*;
 import com.example.pisioconf_backend.services.KorisnikService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -105,6 +102,12 @@ public class KorisnikController {
     @PostMapping("/{id}/change-password")
     public void changePassword( @PathVariable Integer id, @Valid @RequestBody ChangePasswordRequest request) throws Exception {
         korisnikService.updatePassword(id,request);
+    }
+
+    @PostMapping("dodaj_moderatora")
+    public void addModerator(@RequestBody @Valid SignUpRequest request)
+    {
+        korisnikService.addModerator(request);
     }
 
 }

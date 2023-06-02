@@ -10,6 +10,7 @@ import com.example.pisioconf_backend.models.requests.RezervacijaRequest;
 import com.example.pisioconf_backend.repositories.DogadjajRepository;
 import com.example.pisioconf_backend.repositories.ResursRepository;
 import com.example.pisioconf_backend.repositories.RezervacijaRepository;
+import com.example.pisioconf_backend.services.ResursService;
 import com.example.pisioconf_backend.services.RezervacijaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,15 @@ public class RezervacijaImplService implements RezervacijaService {
     private final RezervacijaRepository rezervacijaRepository;
     private final ResursRepository resursRepository;
     private final DogadjajRepository dogadjajRepository;
+    private final ResursService resursService;
 
     public RezervacijaImplService(ModelMapper modelMapper, RezervacijaRepository rezervacijaRepository, ResursRepository resursRepository,
-                                  DogadjajRepository dogadjajRepository) {
+                                  DogadjajRepository dogadjajRepository, ResursService resursService) {
         this.modelMapper = modelMapper;
         this.rezervacijaRepository = rezervacijaRepository;
         this.resursRepository = resursRepository;
         this.dogadjajRepository = dogadjajRepository;
+        this.resursService = resursService;
     }
 
     @Override
@@ -93,6 +96,22 @@ public class RezervacijaImplService implements RezervacijaService {
         rezervacijaEntity.setId(id);
         rezervacijaEntity = rezervacijaRepository.saveAndFlush(rezervacijaEntity);
         return null; // findById(ocjenaEntity.getId());
+    }
+
+
+    @Override
+    public void updateRezervacija(RezervacijaEntityPK id, Integer kolicina) {
+        RezervacijaEntity rezervacijaEntity = rezervacijaRepository.findById(id).get();
+        Integer trenutnaKolicina=rezervacijaEntity.getKolicina();
+
+        resursService.updateResursKolicinaPovecaj(id.getResursId(), trenutnaKolicina);
+        if (kolicina != null) {
+            rezervacijaEntity.setKolicina(kolicina);
+        }
+
+        rezervacijaEntity.setId(id);
+        rezervacijaEntity = rezervacijaRepository.saveAndFlush(rezervacijaEntity);
+        resursService.updateResursKolicinaSmanji(id.getResursId(), kolicina);
     }
 
 

@@ -20,4 +20,5 @@ public interface RezervacijaService {
     Rezervacija findById(RezervacijaEntityPK id);
 
     Rezervacija update(RezervacijaEntityPK id, RezervacijaRequest rezervacijaRequest);
+    public void updateRezervacija(RezervacijaEntityPK id, Integer kolicina);
 }

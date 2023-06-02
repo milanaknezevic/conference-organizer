@@ -1,5 +1,6 @@
 package com.example.pisioconf_backend.models.dto;
 
+import com.example.pisioconf_backend.models.entities.OcjenaEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ public class Konferencija {
     private String url;
     private List<Dogadjaj> dogadjajs;
     private Lokacija lokacija;
+    private List<Ocjena> ocjenas;
 
 
 }

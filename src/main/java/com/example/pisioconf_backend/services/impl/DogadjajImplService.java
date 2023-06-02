@@ -2,6 +2,7 @@ package com.example.pisioconf_backend.services.impl;
 
 import com.example.pisioconf_backend.exception.NotFoundException;
 import com.example.pisioconf_backend.models.dto.Dogadjaj;
+import com.example.pisioconf_backend.models.dto.Korisnik;
 import com.example.pisioconf_backend.models.entities.*;
 import com.example.pisioconf_backend.models.requests.DogadjajRequest;
 import com.example.pisioconf_backend.repositories.*;
@@ -27,8 +28,10 @@ public class DogadjajImplService implements DogadjajService {
     private final TipDogadjajaRepository tipDogadjajaRepository;
     private final ResursRepository resursRepository;
     private final KonferencijaRepository konferencijaRepository;
+    private final KorisnikRepository korisnikRepository;
 
-    public DogadjajImplService(ModelMapper modelMapper, DogadjajRepository dogadjajRepository, RezervacijaRepository rezervacijaRepository, LokacijaRepository lokacijaRepository, SobaRepository sobaRepository, TipDogadjajaRepository tipDogadjajaRepository, ResursRepository resursRepository, KonferencijaRepository konferencijaRepository) {
+    public DogadjajImplService(ModelMapper modelMapper, DogadjajRepository dogadjajRepository, RezervacijaRepository rezervacijaRepository, LokacijaRepository lokacijaRepository, SobaRepository sobaRepository, TipDogadjajaRepository tipDogadjajaRepository, ResursRepository resursRepository, KonferencijaRepository konferencijaRepository,
+                               KorisnikRepository korisnikRepository) {
         this.modelMapper = modelMapper;
         this.dogadjajRepository = dogadjajRepository;
         this.rezervacijaRepository = rezervacijaRepository;
@@ -37,6 +40,7 @@ public class DogadjajImplService implements DogadjajService {
         this.tipDogadjajaRepository = tipDogadjajaRepository;
         this.resursRepository = resursRepository;
         this.konferencijaRepository = konferencijaRepository;
+        this.korisnikRepository = korisnikRepository;
     }
 
     @Override
@@ -56,14 +60,24 @@ public class DogadjajImplService implements DogadjajService {
 
     @Override
     public Dogadjaj insert(DogadjajRequest dogadjajRequest) throws NotFoundException {
-        LokacijaEntity lokacijaEntity = lokacijaRepository.findById(dogadjajRequest.getLokacijaId()).get();
+
         TipDogadjajaEntity tipDogadjajaEntity = tipDogadjajaRepository.findById(dogadjajRequest.getTipDogadjaja()).get();
         KonferencijaEntity konferencijaEntity = konferencijaRepository.findById(dogadjajRequest.getKonferencijaId()).get();
 
+        KorisnikEntity korisnikEntity=korisnikRepository.findById(dogadjajRequest.getModerator_Id()).get();
         DogadjajEntity dogadjajEntity = modelMapper.map(dogadjajRequest, DogadjajEntity.class);
+        if(dogadjajRequest.getLokacijaId() !=null)
+        {
+            LokacijaEntity lokacijaEntity = lokacijaRepository.findById(dogadjajRequest.getLokacijaId()).get();
+            SobaEntity sobaEntity = sobaRepository.findById(dogadjajRequest.getSobaId()).get();
+            dogadjajEntity.setLokacija(lokacijaEntity);
+            dogadjajEntity.setSoba(sobaEntity);
+        }
         dogadjajEntity.setKonferencija(konferencijaEntity);
         dogadjajEntity.setTipDogadjaja(tipDogadjajaEntity);
-        dogadjajEntity.setLokacija(lokacijaEntity);
+
+
+        dogadjajEntity.setKorisnik(korisnikEntity);
 
         dogadjajEntity.setId(null);
         dogadjajEntity = dogadjajRepository.saveAndFlush(dogadjajEntity);
@@ -85,8 +99,12 @@ public class DogadjajImplService implements DogadjajService {
         if (dogadjajRequest.getUrl() != null) {
             dogadjajEntity.setUrl(dogadjajRequest.getUrl());
         }
-
+       KorisnikEntity moderator=korisnikRepository.findById(dogadjajRequest.getModerator_Id()).get();
+        TipDogadjajaEntity tipDogadjajaEntity=tipDogadjajaRepository.findById(dogadjajRequest.getTipDogadjaja()).get();
         dogadjajEntity.setId(id);
+        dogadjajEntity.setKorisnik(moderator);
+        dogadjajEntity.setTipDogadjaja(tipDogadjajaEntity);
+
 
         dogadjajEntity = dogadjajRepository.saveAndFlush(dogadjajEntity);
         return findById(dogadjajEntity.getId());
@@ -99,7 +117,7 @@ public class DogadjajImplService implements DogadjajService {
         List<DogadjajEntity> dogadjaji = dogadjajRepository.findAll();
         for (DogadjajEntity d : dogadjaji) {
             LocalDateTime vrijeme = LocalDateTime.ofInstant(d.getEndTime().toInstant(), ZoneId.systemDefault());
-            if (vrijeme.isAfter(now)) {
+            if (vrijeme.isAfter(now) && d.getUrl()==null) {
                 SobaEntity soba = d.getSoba();
 
                 List<RezervacijaEntity> rezervacije = rezervacijaRepository.getAllRezervacijeByDogadjajID(d.getId());

@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface ResursService {
     List<Resurs> findAll();
+    List<Resurs> findALlByLokacija(Integer idLokacije);
+     void updateResursKolicinaPovecaj(Integer resursId, Integer novaKolicina);
+     void updateResursKolicinaSmanji(Integer resursId, Integer novaKolicina);
 }
