@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,10 +66,8 @@ public class KonferencijaImplService implements KonferencijaService {
         KorisnikEntity organizatorEnttity = korisnikRepository.findById(konferencijaRequest.getOrganizatorId()).get();
 
 
-
         KonferencijaEntity konferencijaEntity = modelMapper.map(konferencijaRequest, KonferencijaEntity.class);
-        if(konferencijaRequest.getLokacijaId()!=null)
-        {
+        if (konferencijaRequest.getLokacijaId() != null) {
             LokacijaEntity lokacijaEntity = lokacijaRepository.findById(konferencijaRequest.getLokacijaId()).get();
             konferencijaEntity.setLokacija(lokacijaEntity);
         }
@@ -136,8 +135,8 @@ public class KonferencijaImplService implements KonferencijaService {
     }
 
     @Override
-    public List<Konferencija> findAllKonferencijeByDatum(LocalDateTime datum) throws NotFoundException {
-        return konferencijaRepository.findAllKonferencijeByDatum(datum).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+    public List<Konferencija> findAllKonferencijeByDatum(Date start,Date end) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByDatum(start,end).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
 
     }
 
@@ -147,8 +146,8 @@ public class KonferencijaImplService implements KonferencijaService {
     }
 
     @Override
-    public List<Konferencija> findAllKonferencijeByStatusAndDatum(Boolean status, LocalDateTime datum) throws NotFoundException {
-        return konferencijaRepository.findAllKonferencijeByStatusAndDatum(status, datum).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+    public List<Konferencija> findAllKonferencijeByStatusAndDatum(Boolean status, Date start,Date end) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByStatusAndDatum(status, start,end).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
 
     }
 
@@ -159,14 +158,14 @@ public class KonferencijaImplService implements KonferencijaService {
     }
 
     @Override
-    public List<Konferencija> findAllKonferencijeByDatumAndNaziv(LocalDateTime datum, String nazivPattern) throws NotFoundException {
-        return konferencijaRepository.findAllKonferencijeByDatumAndNaziv(datum, nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+    public List<Konferencija> findAllKonferencijeByDatumAndNaziv(Date start,Date end, String nazivPattern) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByDatumAndNaziv(start,end, nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
 
     }
 
     @Override
-    public List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status, LocalDateTime datum, String nazivPattern) throws NotFoundException {
-        return konferencijaRepository.findAllKonferencijeByStatusAndDatumAndNaziv(status, datum, nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+    public List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status, Date start,Date end, String nazivPattern) throws NotFoundException {
+        return konferencijaRepository.findAllKonferencijeByStatusAndDatumAndNaziv(status, start,end, nazivPattern).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
 
     }
 
@@ -190,15 +189,13 @@ public class KonferencijaImplService implements KonferencijaService {
 
         List<Konferencija> konferencijaEntities = konferencijaRepository.findAll().stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
         List<Konferencija> noveKonferencije = new ArrayList<>();
-      //  List<Dogadjaj> noviDogadjaji=new ArrayList<>();
+        //  List<Dogadjaj> noviDogadjaji=new ArrayList<>();
 
         for (Konferencija k : konferencijaEntities) {
-            List<Dogadjaj> noviDogadjaji=new ArrayList<>();
-            for (Dogadjaj d:k.getDogadjajs())
-            {
-                Posjetilac p=d.getPosjetilacs().stream().filter(e->e.getKorisnik().getId()==idPosjetioca).findFirst().orElse(null);
-                if(p!=null)
-                {
+            List<Dogadjaj> noviDogadjaji = new ArrayList<>();
+            for (Dogadjaj d : k.getDogadjajs()) {
+                Posjetilac p = d.getPosjetilacs().stream().filter(e -> e.getKorisnik().getId() == idPosjetioca).findFirst().orElse(null);
+                if (p != null) {
                     noviDogadjaji.add(d);
                 }
             }
@@ -209,8 +206,6 @@ public class KonferencijaImplService implements KonferencijaService {
             }
         }
         return noveKonferencije;
-
-
 
 
     }

@@ -30,15 +30,15 @@ public interface KonferencijaService //extends CrudService<Integer> {
     List<KonferencijaEntity> findAllWhereKonferencijaIsNotFinished();
 
     List<Konferencija> findAllKonferencijeByStatus(Boolean status);
-    List<Konferencija> findAllKonferencijeByDatum(LocalDateTime datum) throws NotFoundException;
+    List<Konferencija> findAllKonferencijeByDatum(Date start,Date end) throws NotFoundException;
 
     List<Konferencija> findAllKonferencijeByNaziv(String nazivPattern) throws NotFoundException;
 
 
-    List<Konferencija> findAllKonferencijeByStatusAndDatum(Boolean status,LocalDateTime datum) throws NotFoundException;
+    List<Konferencija> findAllKonferencijeByStatusAndDatum(Boolean status,Date start,Date end) throws NotFoundException;
     List<Konferencija> findAllKonferencijeByStatusAndNaziv(Boolean status,String nazivPattern) throws NotFoundException;
-    List<Konferencija> findAllKonferencijeByDatumAndNaziv(LocalDateTime datum,String nazivPattern) throws NotFoundException;
-    List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status,LocalDateTime datum,String nazivPattern) throws NotFoundException;
+    List<Konferencija> findAllKonferencijeByDatumAndNaziv(Date start,Date end,String nazivPattern) throws NotFoundException;
+    List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status,Date start,Date end,String nazivPattern) throws NotFoundException;
 
 
     List<Konferencija> findAllKonferencijeByModerator(Integer idModeratora) throws NotFoundException;

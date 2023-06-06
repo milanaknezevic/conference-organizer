@@ -26,25 +26,27 @@ public interface KonferencijaRepository extends JpaRepository<KonferencijaEntity
     @Query("select k from KonferencijaEntity k where k.korisnik.id=:id")
     List<KonferencijaEntity> findAllKonferencijeByModeratorId(Integer id);
 
-    @Query("select k from KonferencijaEntity  k where k.status=: status")
+    @Query("select k from KonferencijaEntity  k where k.status=:status")
     List<KonferencijaEntity> findAllKonferencijeByStatus(Boolean status);
 
-    @Query("SELECT k FROM KonferencijaEntity k WHERE k.startTime >= :datum")
-    List<KonferencijaEntity> findAllKonferencijeByDatum(LocalDateTime datum);
+
+
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.startTime >=:start AND k.endTime <=:end")
+    List<KonferencijaEntity> findAllKonferencijeByDatum(Date start,Date end);
 
     @Query("SELECT k FROM KonferencijaEntity k WHERE k.naziv LIKE :namePrefix%")
     List<KonferencijaEntity> findAllKonferencijeByNaziv(@Param("namePrefix") String namePrefix) throws NotFoundException;
 
 
-    @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.startTime >= :datum")
-    List<KonferencijaEntity> findAllKonferencijeByStatusAndDatum(Boolean status, LocalDateTime datum);
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.startTime >= :start AND k.endTime <= :end")
+    List<KonferencijaEntity> findAllKonferencijeByStatusAndDatum(Boolean status, Date start,Date end);
     @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.naziv LIKE :namePrefix%")
     List<KonferencijaEntity> findAllKonferencijeByStatusAndNaziv(Boolean status, @Param("namePrefix") String namePrefix) throws NotFoundException;
 
-    @Query("SELECT k FROM KonferencijaEntity k WHERE k.startTime >= :datum AND k.naziv LIKE :namePrefix%")
-    List<KonferencijaEntity> findAllKonferencijeByDatumAndNaziv(LocalDateTime datum,@Param("namePrefix") String namePrefix) throws NotFoundException;
-    @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.startTime >= :datum AND k.naziv LIKE :namePrefix%")
-    List<KonferencijaEntity> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status, LocalDateTime datum, @Param("namePrefix") String namePrefix) throws NotFoundException;
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.startTime >= :start AND k.endTime <= :end AND k.naziv LIKE :namePrefix%")
+    List<KonferencijaEntity> findAllKonferencijeByDatumAndNaziv(Date start,Date end,@Param("namePrefix") String namePrefix) throws NotFoundException;
+    @Query("SELECT k FROM KonferencijaEntity k WHERE k.status = :status AND k.startTime >= :start AND k.endTime <= :end AND k.naziv LIKE :namePrefix%")
+    List<KonferencijaEntity> findAllKonferencijeByStatusAndDatumAndNaziv(Boolean status, Date start,Date end, @Param("namePrefix") String namePrefix) throws NotFoundException;
 
 
 

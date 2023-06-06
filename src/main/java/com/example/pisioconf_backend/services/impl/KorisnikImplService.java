@@ -144,20 +144,20 @@ public class KorisnikImplService implements KorisnikService {
     public void changeStatus(Integer userId, ChangeStatusRequest request) throws Exception {
         KorisnikEntity.Status status = korisnikRepository.findById(userId).get().getStatus();
         KorisnikEntity entity = korisnikRepository.findById(userId).get();
-        if (status.toString().equals(UserStatus.REQUESTED.toString()) && UserStatus.ACTIVE.equals(request.getStatus())) {
+        if (status.equals(KorisnikEntity.Status.REQUESTED) && KorisnikEntity.Status.ACTIVE.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.ACTIVE);
              emailService.sendMailApproved(entity.getEmail());
 
         }
-        if (status.toString().equals(UserStatus.BLOCKED.toString()) && UserStatus.ACTIVE.equals(request.getStatus())) {
+        if (status.equals(KorisnikEntity.Status.BLOCKED) &&KorisnikEntity.Status.ACTIVE.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.ACTIVE);
              emailService.sendMailApproved(entity.getEmail());
         }
-        if (status.toString().equals(UserStatus.REQUESTED.toString()) && UserStatus.BLOCKED.equals(request.getStatus())) {
+        if (status.equals(KorisnikEntity.Status.REQUESTED) && KorisnikEntity.Status.BLOCKED.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.BLOCKED);
              emailService.sendSimpleMailNotApproved(entity.getEmail());
         }
-        if (UserStatus.REQUESTED.equals(request.getStatus())) {
+        if (KorisnikEntity.Status.REQUESTED.equals(request.getStatus())) {
             throw new ForbiddenException();
         }
         entity.setStatus(modelMapper.map(request.getStatus(), KorisnikEntity.Status.class));

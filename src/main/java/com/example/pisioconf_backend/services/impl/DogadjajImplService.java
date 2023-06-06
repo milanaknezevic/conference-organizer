@@ -64,10 +64,9 @@ public class DogadjajImplService implements DogadjajService {
         TipDogadjajaEntity tipDogadjajaEntity = tipDogadjajaRepository.findById(dogadjajRequest.getTipDogadjaja()).get();
         KonferencijaEntity konferencijaEntity = konferencijaRepository.findById(dogadjajRequest.getKonferencijaId()).get();
 
-        KorisnikEntity korisnikEntity=korisnikRepository.findById(dogadjajRequest.getModerator_Id()).get();
+        KorisnikEntity korisnikEntity = korisnikRepository.findById(dogadjajRequest.getModerator_Id()).get();
         DogadjajEntity dogadjajEntity = modelMapper.map(dogadjajRequest, DogadjajEntity.class);
-        if(dogadjajRequest.getLokacijaId() !=null)
-        {
+        if (dogadjajRequest.getLokacijaId() != null) {
             LokacijaEntity lokacijaEntity = lokacijaRepository.findById(dogadjajRequest.getLokacijaId()).get();
             SobaEntity sobaEntity = sobaRepository.findById(dogadjajRequest.getSobaId()).get();
             dogadjajEntity.setLokacija(lokacijaEntity);
@@ -99,8 +98,8 @@ public class DogadjajImplService implements DogadjajService {
         if (dogadjajRequest.getUrl() != null) {
             dogadjajEntity.setUrl(dogadjajRequest.getUrl());
         }
-       KorisnikEntity moderator=korisnikRepository.findById(dogadjajRequest.getModerator_Id()).get();
-        TipDogadjajaEntity tipDogadjajaEntity=tipDogadjajaRepository.findById(dogadjajRequest.getTipDogadjaja()).get();
+        KorisnikEntity moderator = korisnikRepository.findById(dogadjajRequest.getModerator_Id()).get();
+        TipDogadjajaEntity tipDogadjajaEntity = tipDogadjajaRepository.findById(dogadjajRequest.getTipDogadjaja()).get();
         dogadjajEntity.setId(id);
         dogadjajEntity.setKorisnik(moderator);
         dogadjajEntity.setTipDogadjaja(tipDogadjajaEntity);
@@ -117,7 +116,7 @@ public class DogadjajImplService implements DogadjajService {
         List<DogadjajEntity> dogadjaji = dogadjajRepository.findAll();
         for (DogadjajEntity d : dogadjaji) {
             LocalDateTime vrijeme = LocalDateTime.ofInstant(d.getEndTime().toInstant(), ZoneId.systemDefault());
-            if (vrijeme.isAfter(now) && d.getUrl()==null) {
+            if (vrijeme.isAfter(now) && d.getUrl() == null) {
                 SobaEntity soba = d.getSoba();
 
                 List<RezervacijaEntity> rezervacije = rezervacijaRepository.getAllRezervacijeByDogadjajID(d.getId());

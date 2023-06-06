@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/konferencije")
@@ -24,45 +26,104 @@ public class KonferencijaController {
     public KonferencijaController(KonferencijaService konferencijaService) {
         this.konferencijaService = konferencijaService;
     }
+    @GetMapping("/{idModeratora}/moderator")
+    public List<Konferencija> findByModeratorId(@PathVariable Integer idModeratora) throws NotFoundException {
+        return konferencijaService.findAllKonferencijeByModerator(idModeratora);
+    }
+    @GetMapping("/searchConfModerator/{idModeratora}")
+    public List<Konferencija> findAllKonferencijeByParamsModerator(@PathVariable Integer idModeratora,@RequestParam(value = "status", required = false) Boolean status,@RequestParam(value = "start", required = false) Date start,@RequestParam(value = "end", required = false) Date end, @RequestParam(value = "naziv", required = false) String naziv)
+    {
+        List<Konferencija> konferencije= konferencijaService.findAllKonferencijeByModerator(idModeratora);
+        List<Konferencija> filtriraneKonferencije= new ArrayList<>();
+        if(status != null && start == null && end == null && naziv ==null)
+        {
+           return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStatus().equals(status))
+                    .collect(Collectors.toList());
 
-    @GetMapping("/datum")
-    public List<Konferencija> findAllKonferencijeByDatum(@RequestParam("datum") LocalDateTime datum)
-    {
-        return konferencijaService.findAllKonferencijeByDatum(datum);
-    }
-    @GetMapping("/naziv")
-    public List<Konferencija> findAllKonferecijeByNaziv(@RequestParam("naziv") String naziv)
-    {
-        return konferencijaService.findAllKonferencijeByNaziv(naziv);
-    }
-    @GetMapping("/status")
-    public List<Konferencija> findKonferencijeByStatus(@RequestParam("status") Boolean status)
-    {
-        return konferencijaService.findAllKonferencijeByStatus(status);
-    }
-    @GetMapping("/status-datum")
-    public List<Konferencija> findAllKonferencijeByStatusAndDatum(@RequestParam("status") Boolean status,@RequestParam("datum") LocalDateTime datum)
-    {
-        return konferencijaService.findAllKonferencijeByStatusAndDatum(status,datum);
-    }
-    @GetMapping("/status-naziv")
-    public List<Konferencija> findAllKonferencijeByStatusAndNaziv(@RequestParam("status") Boolean status, @RequestParam("naziv") String naziv)
-    {
-        return konferencijaService.findAllKonferencijeByStatusAndNaziv(status,naziv);
+        }
+        else if(status == null && start != null && end != null && naziv ==null)
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end))
+                    .collect(Collectors.toList());
+        }
+        else if(naziv !=null && status == null && start == null && end == null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        } else if(status != null && start != null && end != null && naziv ==null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end) && konferencija.getStatus().equals(status))
+                    .collect(Collectors.toList());
+        }
+        else if(status != null && start == null && end == null && naziv !=null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStatus().equals(status) && konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        }
+        else if(status == null && start != null && end != null && naziv !=null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end) && konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        }
+        else if(status != null && start != null && end != null && naziv !=null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end)
+                            && konferencija.getStatus().equals(status) && konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        }
+        else {
+            return konferencijaService.findAllKonferencijeByModerator(idModeratora);
+        }
+//        //return konferencijaService.findAllKonferencijeByStatusAndDatumAndNaziv(status,datum,naziv);
+
     }
 
-    @GetMapping("/datum-naziv")
-    public List<Konferencija> findAllKonferencijeByDatumAndNaziv(@RequestParam("datum") LocalDateTime datum, @RequestParam("naziv") String naziv)
-    {
-        return konferencijaService.findAllKonferencijeByDatumAndNaziv(datum,naziv);
-    }
 
-    @GetMapping("/status-datum-naziv")
-    public List<Konferencija> findAllKonferencijeByStatusAndDatumAndNaziv(@RequestParam("status") Boolean status,@RequestParam("datum") LocalDateTime datum, @RequestParam("naziv") String naziv)
-    {
-        return konferencijaService.findAllKonferencijeByStatusAndDatumAndNaziv(status,datum,naziv);
-    }
 
+
+    @GetMapping("/searchConf")
+    public List<Konferencija> findAllKonferencijeByParams(@RequestParam(value = "status", required = false) Boolean status,@RequestParam(value = "start", required = false) Date start,@RequestParam(value = "end", required = false) Date end, @RequestParam(value = "naziv", required = false) String naziv)
+    {
+        if(status != null && start == null && end == null && naziv ==null)
+        {
+            return konferencijaService.findAllKonferencijeByStatus(status);
+        }
+        else if(status == null && start != null && end != null && naziv ==null)
+        {
+            return konferencijaService.findAllKonferencijeByDatum(start,end);
+        }
+        else if(naziv !=null && status == null && start == null && end == null )
+        {
+            return konferencijaService.findAllKonferencijeByNaziv(naziv);
+        } else if(status != null && start != null && end != null && naziv ==null )
+        {
+            return konferencijaService.findAllKonferencijeByStatusAndDatum(status,start,end);
+        }
+        else if(status != null && start == null && end == null && naziv !=null )
+        {
+            return konferencijaService.findAllKonferencijeByStatusAndNaziv(status,naziv);
+        }
+        else if(status == null && start != null && end != null && naziv !=null )
+        {
+            return konferencijaService.findAllKonferencijeByDatumAndNaziv(start,end,naziv);
+        }
+        else if(status != null && start != null && end != null && naziv !=null )
+        {
+            return konferencijaService.findAllKonferencijeByStatusAndDatumAndNaziv(status,start,end,naziv);
+        }
+        else {
+            return konferencijaService.findAll();
+        }
+//        //return konferencijaService.findAllKonferencijeByStatusAndDatumAndNaziv(status,datum,naziv);
+
+    }
 
 
     @GetMapping("/all")
@@ -80,13 +141,65 @@ public class KonferencijaController {
     public Konferencija findById(@PathVariable Integer id) throws NotFoundException {
         return konferencijaService.findById(id);
     }
-    @GetMapping("/{idModeratora}/moderator")
-    public List<Konferencija> findByModeratorId(@PathVariable Integer idModeratora) throws NotFoundException {
-        return konferencijaService.findAllKonferencijeByModerator(idModeratora);
-    }
+
     @GetMapping("/{idPosjetioca}/posjetilac")
     public List<Konferencija> findByPosjetilacId(@PathVariable Integer idPosjetioca) throws NotFoundException {
        return konferencijaService.findAllKonferencijeByPosjetilac(idPosjetioca);
+    }
+
+    @GetMapping("/searchConfPosjetilac/{idPosjetioca}")
+    public List<Konferencija> findAllKonferencijeByParamsPosjetilac(@PathVariable Integer idPosjetioca,@RequestParam(value = "status", required = false) Boolean status,@RequestParam(value = "start", required = false) Date start,@RequestParam(value = "end", required = false) Date end, @RequestParam(value = "naziv", required = false) String naziv)
+    {
+        List<Konferencija> konferencije= konferencijaService.findAllKonferencijeByPosjetilac(idPosjetioca);
+        List<Konferencija> filtriraneKonferencije= new ArrayList<>();
+        if(status != null && start == null && end == null && naziv ==null)
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStatus().equals(status))
+                    .collect(Collectors.toList());
+
+        }
+        else if(status == null && start != null && end != null && naziv ==null)
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end))
+                    .collect(Collectors.toList());
+        }
+        else if(naziv !=null && status == null && start == null && end == null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        } else if(status != null && start != null && end != null && naziv ==null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end) && konferencija.getStatus().equals(status))
+                    .collect(Collectors.toList());
+        }
+        else if(status != null && start == null && end == null && naziv !=null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStatus().equals(status) && konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        }
+        else if(status == null && start != null && end != null && naziv !=null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end) && konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        }
+        else if(status != null && start != null && end != null && naziv !=null )
+        {
+            return filtriraneKonferencije = konferencije.stream()
+                    .filter(konferencija -> konferencija.getStartTime().before(start) && konferencija.getEndTime().after(end)
+                            && konferencija.getStatus().equals(status) && konferencija.getNaziv().startsWith(naziv))
+                    .collect(Collectors.toList());
+        }
+        else {
+            return konferencijaService.findAllKonferencijeByPosjetilac(idPosjetioca);
+        }
+//        //return konferencijaService.findAllKonferencijeByStatusAndDatumAndNaziv(status,datum,naziv);
+
     }
 
 
@@ -111,8 +224,6 @@ public class KonferencijaController {
     public Konferencija insert(@RequestBody @Valid KonferencijaRequest konferencijaRequest) throws NotFoundException {
         return konferencijaService.insert(konferencijaRequest);
     }
-
-
 
     @PatchMapping("/{id}")
     public Konferencija update(@PathVariable Integer id, @RequestBody KonferencijaRequest konferencijaRequest) throws NotFoundException {

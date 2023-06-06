@@ -36,10 +36,10 @@ public class DogadjajEntity {
     @JoinColumn(name = "TIP_DOGADJAJA_id", referencedColumnName = "id", nullable = false)
     private TipDogadjajaEntity tipDogadjaja;
     @ManyToOne
-    @JoinColumn(name = "LOKACIJA_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "LOKACIJA_id", referencedColumnName = "id")
     private LokacijaEntity lokacija;
     @ManyToOne
-    @JoinColumn(name = "soba_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "soba_id", referencedColumnName = "id")
     private SobaEntity soba;
     @ManyToOne
     @JoinColumn(name = "moderator_id", referencedColumnName = "id", nullable = false)
