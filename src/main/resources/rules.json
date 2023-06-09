@@ -6,7 +6,7 @@
       "roles": ["POSJETILAC"]
     },
     {
-      "methods": ["GET","DELETE","PATCH"],
+      "methods": ["GET","DELETE","PATCH","POST"],
       "pattern": "/konferencije/*",
       "roles": ["ORGANIZATOR","POSJETILAC"]
     },
@@ -53,7 +53,7 @@
     {
       "methods": ["POST"],
       "pattern": "/korisnici/*/change-password",
-      "roles": ["ORGANIZATOR","POSJETILAC","ADMIN","POSJETILAC"]
+      "roles": ["ORGANIZATOR","POSJETILAC","ADMIN"]
     },
     {
       "methods": ["GET"],
@@ -119,6 +119,13 @@
     {
       "methods": ["GET"],
       "pattern": "/konferencije/searchConfPosjetilac/*",
+      "roles": [
+        "POSJETILAC"
+      ]
+    },
+    {
+      "methods": ["DELETE"],
+      "pattern": "/posjetioci/*/*",
       "roles": [
         "POSJETILAC"
       ]
