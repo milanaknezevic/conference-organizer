@@ -23,7 +23,7 @@ public interface KorisnikRepository extends JpaRepository<KorisnikEntity, Intege
 
     Boolean existsByUsername(String username);
 
-    List<KorisnikEntity> findAllByStatusAndRolaNot(KorisnikEntity.Status status,Role rola );
+    List<KorisnikEntity> findAllByStatusAndRolaNotOrderByNazivAsc(KorisnikEntity.Status status,Role rola );
     @Query("SELECT k FROM KorisnikEntity k WHERE k.id <> :currentUserId")
     List<KorisnikEntity> findAllExceptCurrent(Integer currentUserId);
 

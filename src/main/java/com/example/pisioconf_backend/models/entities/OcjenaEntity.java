@@ -3,6 +3,7 @@ package com.example.pisioconf_backend.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Data
@@ -17,6 +18,9 @@ public class OcjenaEntity {
     @Basic
     @Column(name = "komentar")
     private String komentar;
+    @Basic
+    @Column(name = "datum")
+    private Date datum;
     @MapsId("korisnikId")
     @ManyToOne
     @JoinColumn(name = "KORISNIK_id", referencedColumnName = "id", nullable = false)

@@ -10,6 +10,7 @@ import com.example.pisioconf_backend.services.KonferencijaService;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,9 @@ public class KonferencijaImplService implements KonferencijaService {
 
     @Override
     public List<Konferencija> findAll() {
-        return konferencijaRepository.findAll().stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
+        Sort sort = Sort.by(Sort.Direction.ASC, "naziv");
+
+        return konferencijaRepository.findAll(sort).stream().map(l -> modelMapper.map(l, Konferencija.class)).collect(Collectors.toList());
     }
 
     @Override

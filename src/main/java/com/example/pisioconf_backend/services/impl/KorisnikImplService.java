@@ -89,7 +89,7 @@ public class KorisnikImplService implements KorisnikService {
     }
 
     public List<Korisnik> findAllByStatus(KorisnikEntity.Status  status,Role role) {
-        return korisnikRepository.findAllByStatusAndRolaNot(status,role).stream().map(l -> modelMapper.map(l, Korisnik.class)).collect(Collectors.toList());
+        return korisnikRepository.findAllByStatusAndRolaNotOrderByNazivAsc(status,role).stream().map(l -> modelMapper.map(l, Korisnik.class)).collect(Collectors.toList());
     }
 
     @Override

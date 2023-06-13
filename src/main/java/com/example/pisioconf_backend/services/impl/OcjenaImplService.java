@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -32,6 +33,7 @@ public class OcjenaImplService implements OcjenaService {
         ocjenaEntityPK.setKorisnikId(ocjenaRequest.getKorisnikId());
         OcjenaEntity ocjenaEntity = modelMapper.map(ocjenaRequest, OcjenaEntity.class);
         ocjenaEntity.setId(ocjenaEntityPK);
+        ocjenaEntity.setDatum( new Date());
         ocjenaEntity = ocjenaRepository.saveAndFlush(ocjenaEntity);
 //        ResursEntity resursEntity = resursRepository.findById(rezervacijaRequest.getResursId()).get();
 //        resursEntity.setKolicina(resursEntity.getKolicina()-rezervacijaRequest.getKolicina());
