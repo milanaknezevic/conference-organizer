@@ -213,6 +213,7 @@ public class KonferencijaController {
         return konferencijaService.getAllOcjeneByKorisnikId(idKonferencije);
     }
 
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         konferencijaService.delete(id);

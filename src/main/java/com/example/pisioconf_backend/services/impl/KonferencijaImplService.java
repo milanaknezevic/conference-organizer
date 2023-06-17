@@ -76,7 +76,7 @@ public class KonferencijaImplService implements KonferencijaService {
         }
         konferencijaEntity.setKorisnik(organizatorEnttity);
 
-
+konferencijaEntity.setStatus(false);
         konferencijaEntity.setId(null);
 
         konferencijaEntity = konferencijaRepository.saveAndFlush(konferencijaEntity);
@@ -221,9 +221,15 @@ public class KonferencijaImplService implements KonferencijaService {
         List<KonferencijaEntity> nezavrseneKonferencije = findAllWhereKonferencijaIsNotFinished();
         for (KonferencijaEntity k : nezavrseneKonferencije) {
             LocalDateTime vrijeme = LocalDateTime.ofInstant(k.getEndTime().toInstant(), ZoneId.systemDefault());
-            if (vrijeme.isAfter(now)) {
+            System.out.println("prije");
+
+            System.out.println("now" +now);
+            System.out.println("vrijeme"+vrijeme);
+            System.out.println("vrijeme.isAfter(now)"+vrijeme.isAfter(now));
+            if (vrijeme.isBefore(now)) {
                 k.setStatus(true);
                 k = konferencijaRepository.saveAndFlush(k);
+                System.out.println("if");
             }
         }
 

@@ -151,7 +151,7 @@ public class KorisnikImplService implements KorisnikService {
         }
         if (status.equals(KorisnikEntity.Status.BLOCKED) &&KorisnikEntity.Status.ACTIVE.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.ACTIVE);
-             emailService.sendMailApproved(entity.getEmail());
+             emailService.sendSimpleMailBlocked(entity.getEmail());
         }
         if (status.equals(KorisnikEntity.Status.REQUESTED) && KorisnikEntity.Status.BLOCKED.equals(request.getStatus())) {
             entity.setStatus(KorisnikEntity.Status.BLOCKED);
@@ -190,6 +190,7 @@ public class KorisnikImplService implements KorisnikService {
         /*if (user.getLozinka() != null && user.getLozinka().length() > 0 && !user.getLozinka().equals(entity.getPassword())) {
             entity.setPassword(passwordEncoder.encode(user.getLozinka()));
         }*/
+
         entity.setId(id);
         entity = korisnikRepository.saveAndFlush(entity);
         manager.refresh(entity);
