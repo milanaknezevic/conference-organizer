@@ -221,15 +221,11 @@ konferencijaEntity.setStatus(false);
         List<KonferencijaEntity> nezavrseneKonferencije = findAllWhereKonferencijaIsNotFinished();
         for (KonferencijaEntity k : nezavrseneKonferencije) {
             LocalDateTime vrijeme = LocalDateTime.ofInstant(k.getEndTime().toInstant(), ZoneId.systemDefault());
-            System.out.println("prije");
 
-            System.out.println("now" +now);
-            System.out.println("vrijeme"+vrijeme);
-            System.out.println("vrijeme.isAfter(now)"+vrijeme.isAfter(now));
             if (vrijeme.isBefore(now)) {
                 k.setStatus(true);
                 k = konferencijaRepository.saveAndFlush(k);
-                System.out.println("if");
+
             }
         }
 
